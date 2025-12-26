@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAKRANDOMLOL - 왁타버스 내전 전적</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --bg-hover: #22222f;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-gold: #fbbf24;
+            --accent-red: #ef4444;
+            --accent-green: #22c55e;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --border: #27272a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .bg-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
+        }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+            background: rgba(10, 10, 15, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 28px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            font-size: 14px;
+            color: var(--text-muted);
+            -webkit-text-fill-color: var(--text-muted);
+            font-family: 'Noto Sans KR', sans-serif;
+            margin-left: 10px;
+            font-weight: 400;
+        }
+
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+
+        .hero h1 {
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 42px;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .search-box::placeholder { color: var(--text-muted); }
+        .search-box:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 2px;
+        }
+
+        .streamer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 16px;
+            margin-bottom: 50px;
+        }
+
+        .streamer-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .streamer-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .streamer-card:hover {
+            background: var(--bg-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .streamer-card:hover::before { opacity: 1; }
+
+        .streamer-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 16px;
+        }
+
+        .streamer-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .streamer-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .streamer-info h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .streamer-info .summoner-name {
+            font-size: 13px;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .rank-badge.challenger { color: #f59e0b; }
+        .rank-badge.grandmaster { color: #ef4444; }
+        .rank-badge.master { color: #a855f7; }
+        .rank-badge.diamond { color: #3b82f6; }
+        .rank-badge.emerald { color: #10b981; }
+        .rank-badge.platinum { color: #06b6d4; }
+        .rank-badge.gold { color: #fbbf24; }
+        .rank-badge.silver { color: #9ca3af; }
+        .rank-badge.bronze { color: #b45309; }
+        .rank-badge.iron { color: #78716c; }
+
+        .streamer-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat { text-align: center; }
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-muted);
+        }
+
+        .empty-state svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+            border-top: 1px solid var(--border);
+            margin-top: 60px;
+        }
+
+        footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .hero h1 { font-size: 28px; }
+            .streamer-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-effect"></div>
+
+    <header>
+        <div class="logo">
+            WAKRANDOMLOL
+            <span>왁타버스 내전 전적</span>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>왁타버스 내전 전적</h1>
+            <p>올 랜덤 버튜버 억지 밸런스 롤 내전 참가자 전적</p>
+        </section>
+
+        <div class="search-container">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" id="search-input" class="search-box" placeholder="스트리머 또는 소환사명 검색..." oninput="filterStreamers()">
+        </div>
+
+        <h2 class="section-title">등록된 스트리머 (<span id="streamer-count">0</span>명)</h2>
+
+        <div id="streamer-grid" class="streamer-grid"></div>
+
+        <div id="empty-state" class="empty-state" style="display: none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <h3>등록된 스트리머가 없습니다</h3>
+            <p>스트리머가 추가되면 여기에 표시됩니다</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>WAKRANDOMLOL은 왁타버스 팬들을 위한 비공식 팬사이트입니다.</p>
+        <p style="margin-top: 8px;">
+            데이터 출처: <a href="https://developer.riotgames.com" target="_blank">Riot Games API</a>
+        </p>
+    </footer>
+
+    <script>
+        // ============================================
+        // 🎮 스트리머 목록 - 여기서 추가/삭제하세요!
+        // ============================================
+        const STREAMERS = [
+            // { name: '표시될 이름', riotId: '게임닉네임#태그' },
+            { name: '우왁굳', riotId: 'woowakgood#KR1' },
+            { name: '아이네', riotId: 'ine#KR1' },
+            { name: '징버거', riotId: 'jingburger#KR1' },
+            { name: '릴파', riotId: 'lilpa#KR1' },
+            { name: '주르르', riotId: 'jururu#KR1' },
+            { name: '고세구', riotId: 'gosegu#KR1' },
+            { name: '비챤', riotId: 'vichan#KR1' },
+            { name: '뢴트게늄', riotId: 'roentgenium#KR1' },
+            { name: '독고혜지', riotId: 'dokgo#KR1' },
+            { name: '곽춘식', riotId: 'kwakchunshik#KR1' },
+            
+            // 🔽 새 스트리머 추가는 여기에! 🔽
+            // { name: '새스트리머', riotId: '닉네임#태그' },
+        ];
+        // ============================================
+
+        // 메인 페이지 렌더링
+        function renderStreamers(filter = '') {
+            const grid = document.getElementById('streamer-grid');
+            const emptyState = document.getElementById('empty-state');
+            const countEl = document.getElementById('streamer-count');
+
+            let filtered = STREAMERS;
+            if (filter) {
+                const f = filter.toLowerCase();
+                filtered = STREAMERS.filter(s => 
+                    s.name.toLowerCase().includes(f) || 
+                    s.riotId.toLowerCase().includes(f)
+                );
+            }
+
+            countEl.textContent = STREAMERS.length;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            grid.innerHTML = filtered.map(s => `
+                <div class="streamer-card">
+                    <div class="streamer-header">
+                        <div class="streamer-avatar">${s.name.charAt(0)}</div>
+                        <div class="streamer-info">
+                            <h3>${s.name}</h3>
+                            <span class="summoner-name">${s.riotId}</span>
+                        </div>
+                    </div>
+                    <div class="rank-badge">
+                        ❓ 데이터 로딩중...
+                    </div>
+                    <div class="streamer-stats">
+                        <div class="stat">
+                            <div class="stat-value">-</div>
+                            <div class="stat-label">게임수</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">-</div>
+                            <div class="stat-label">승률</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">-</div>
+                            <div class="stat-label">KDA</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 검색 필터
+        function filterStreamers() {
+            const query = document.getElementById('search-input').value;
+            renderStreamers(query);
+        }
+
+        // 초기 렌더링
+        renderStreamers();
+    </script>
+</body>
+</html>
