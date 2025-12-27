@@ -102,65 +102,69 @@
             border-radius: 2px;
         }
 
-        /* 스트리머 목록 */
-        .streamer-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 12px;
+        /* 등록 명단 (드래그 소스) */
+        .roster-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
             margin-bottom: 30px;
         }
 
-        .streamer-card {
-            background: var(--bg-card);
+        .roster-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .roster-card {
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 14px;
+            border-radius: 10px;
+            padding: 12px 16px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            cursor: grab;
             transition: all 0.2s;
+            user-select: none;
         }
 
-        .streamer-card:hover {
+        .roster-card:hover {
             background: var(--bg-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .streamer-card.in-team {
+        .roster-card.dragging {
             opacity: 0.5;
-            border-color: var(--accent-green);
+            cursor: grabbing;
         }
 
-        .tier-icon {
-            width: 36px;
-            height: 36px;
-            flex-shrink: 0;
+        .roster-card.in-team {
+            opacity: 0.3;
+            pointer-events: none;
         }
 
-        .streamer-info {
-            flex: 1;
-            min-width: 0;
+        .roster-card .tier-icon {
+            width: 32px;
+            height: 32px;
         }
 
-        .streamer-name {
+        .roster-card .info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .roster-card .name {
             font-weight: 700;
             font-size: 14px;
-            margin-bottom: 3px;
         }
 
-        .streamer-detail {
+        .roster-card .detail {
             font-size: 11px;
             color: var(--text-muted);
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .position-badge {
-            padding: 2px 6px;
-            background: var(--accent-blue);
-            border-radius: 4px;
-            font-size: 10px;
-            color: white;
         }
 
         /* 팀 배치 */
@@ -211,16 +215,17 @@
             border: 2px dashed var(--border);
             border-radius: 8px;
             min-height: 56px;
-            cursor: pointer;
             transition: all 0.2s;
         }
 
-        .team-slot:hover {
+        .team-slot.drag-over {
             border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
         }
 
         .team-slot.filled {
             border-style: solid;
+            cursor: pointer;
         }
 
         .slot-position {
@@ -304,74 +309,57 @@
             color: var(--text-primary);
         }
 
-        /* 모달 */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
+        /* 버튜버 목록 */
+        .streamer-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
         }
 
-        .modal-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal {
+        .streamer-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 24px;
-            width: 90%;
-            max-width: 400px;
-            max-height: 70vh;
-            overflow-y: auto;
-        }
-
-        .modal h3 { margin-bottom: 16px; font-size: 16px; }
-
-        .modal-streamer-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .modal-streamer {
+            border-radius: 10px;
+            padding: 12px;
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
         }
 
-        .modal-streamer:hover { background: var(--bg-hover); }
-        .modal-streamer.disabled { opacity: 0.4; cursor: not-allowed; }
-
-        .modal-close {
-            width: 100%;
-            margin-top: 16px;
-            padding: 12px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-family: 'Noto Sans KR', sans-serif;
+        .streamer-card .tier-icon {
+            width: 32px;
+            height: 32px;
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px;
+        .streamer-card .info {
+            flex: 1;
+        }
+
+        .streamer-card .name {
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .streamer-card .detail {
+            font-size: 11px;
             color: var(--text-muted);
+        }
+
+        .position-badge {
+            padding: 2px 6px;
+            background: var(--accent-blue);
+            border-radius: 4px;
+            font-size: 10px;
+            color: white;
+        }
+
+        .drag-hint {
+            text-align: center;
+            padding: 10px;
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 15px;
         }
 
         footer {
@@ -392,7 +380,7 @@
         @media (max-width: 600px) {
             header { padding: 15px 20px; }
             .hero h1 { font-size: 24px; }
-            .streamer-list { grid-template-columns: 1fr; }
+            .roster-grid { flex-direction: column; }
         }
     </style>
 </head>
@@ -406,8 +394,15 @@
     <main>
         <section class="hero">
             <h1>올 랜덤 버튜버 억지 밸런스<br>롤 내전</h1>
-            <p>오늘의 참가 스트리머를 확인하고 팀을 배치해보세요</p>
+            <p>오늘의 참가자를 드래그하여 팀에 배치하세요</p>
         </section>
+
+        <!-- 오늘의 등록 명단 -->
+        <h2 class="section-title">🎮 오늘의 참가자 (<span id="roster-count">10</span>명)</h2>
+        <div class="roster-section">
+            <div class="drag-hint">💡 아래 카드를 드래그하여 팀 슬롯에 놓으세요</div>
+            <div id="roster-grid" class="roster-grid"></div>
+        </div>
 
         <!-- 팀 배치 -->
         <h2 class="section-title">⚔️ 팀 배치</h2>
@@ -419,25 +414,25 @@
                         <div class="team-avg" id="blue-avg">평균: -</div>
                     </div>
                     <div class="team-slots" id="blue-team">
-                        <div class="team-slot" data-team="blue" data-position="탑" onclick="openModal('blue', '탑')">
+                        <div class="team-slot" data-team="blue" data-position="탑">
                             <div class="slot-position">탑</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-team="blue" data-position="정글" onclick="openModal('blue', '정글')">
+                        <div class="team-slot" data-team="blue" data-position="정글">
                             <div class="slot-position">정글</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-team="blue" data-position="미드" onclick="openModal('blue', '미드')">
+                        <div class="team-slot" data-team="blue" data-position="미드">
                             <div class="slot-position">미드</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-team="blue" data-position="원딜" onclick="openModal('blue', '원딜')">
+                        <div class="team-slot" data-team="blue" data-position="원딜">
                             <div class="slot-position">원딜</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-team="blue" data-position="서폿" onclick="openModal('blue', '서폿')">
+                        <div class="team-slot" data-team="blue" data-position="서폿">
                             <div class="slot-position">서폿</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
                     </div>
                 </div>
@@ -450,25 +445,25 @@
                         <div class="team-avg" id="red-avg">평균: -</div>
                     </div>
                     <div class="team-slots" id="red-team">
-                        <div class="team-slot" data-team="red" data-position="탑" onclick="openModal('red', '탑')">
+                        <div class="team-slot" data-team="red" data-position="탑">
                             <div class="slot-position">탑</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-team="red" data-position="정글" onclick="openModal('red', '정글')">
+                        <div class="team-slot" data-team="red" data-position="정글">
                             <div class="slot-position">정글</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-team="red" data-position="미드" onclick="openModal('red', '미드')">
+                        <div class="team-slot" data-team="red" data-position="미드">
                             <div class="slot-position">미드</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-team="red" data-position="원딜" onclick="openModal('red', '원딜')">
+                        <div class="team-slot" data-team="red" data-position="원딜">
                             <div class="slot-position">원딜</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-team="red" data-position="서폿" onclick="openModal('red', '서폿')">
+                        <div class="team-slot" data-team="red" data-position="서폿">
                             <div class="slot-position">서폿</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         </div>
                     </div>
                 </div>
@@ -479,8 +474,8 @@
             </div>
         </div>
 
-        <!-- 등록된 스트리머 목록 -->
-        <h2 class="section-title">👥 오늘의 참가자 (<span id="streamer-count">0</span>명)</h2>
+        <!-- 버튜버 목록 (전체 신청자) -->
+        <h2 class="section-title">👥 버튜버 목록 (<span id="streamer-count">0</span>명)</h2>
         <div id="streamer-list" class="streamer-list"></div>
     </main>
 
@@ -488,46 +483,39 @@
         <p>올 랜덤 버튜버 억지 밸런스 롤 내전 비공식 팬사이트</p>
     </footer>
 
-    <!-- 스트리머 선택 모달 -->
-    <div id="modal" class="modal-overlay" onclick="closeModal(event)">
-        <div class="modal" onclick="event.stopPropagation()">
-            <h3>🎮 <span id="modal-position">탑</span> 선택</h3>
-            <div id="modal-list" class="modal-streamer-list"></div>
-            <button class="modal-close" onclick="closeModal()">닫기</button>
-        </div>
-    </div>
-
     <script>
         // ============================================
-        // 🎮 오늘의 참가 스트리머 - 여기서 수정하세요!
+        // 🎮 오늘의 참가자 (10명) - 우왁굳이 뽑은 사람들
         // ============================================
-        // 
-        // 📝 형식:
-        // { name: '닉네임', tier: '티어', position: '주포지션' }
-        //
-        // 티어 옵션: UNRANKED, IRON, BRONZE, SILVER, GOLD, PLATINUM, EMERALD, DIAMOND, MASTER, GRANDMASTER, CHALLENGER
-        // 포지션 옵션: 탑, 정글, 미드, 원딜, 서폿, ALL
-        //
+        const TODAY_ROSTER = [
+            { name: '우왁굳', tier: 'BRONZE', position: '올라운더' },
+            // 아래에 뽑힌 9명 추가
+            { name: '천양', tier: 'PLATINUM', position: '올라운더' },
+            { name: '깐숙', tier: 'MASTER', position: '미드' },
+            { name: '김유나', tier: 'MASTER', position: '서폿' },
+            { name: '포도네', tier: 'DIAMOND', position: '올라운더' },
+            { name: '호아띠', tier: 'DIAMOND', position: '미드' },
+            { name: '곽춘식', tier: 'EMERALD', position: '올라운더' },
+            { name: '한아밍', tier: 'EMERALD', position: '서폿' },
+            { name: '빅토리', tier: 'PLATINUM', position: '서폿' },
+            { name: '문모모', tier: 'SILVER', position: '탑' },
+        ];
         // ============================================
-        const STREAMERS = [
-            // ===== 오늘 뽑힌 9명 + 우왁굳 =====
-            // { name: '우왁굳', tier: 'BRONZE', position: 'ALL' },
-            // { name: '스트리머1', tier: 'SILVER', position: '탑' },
-            // ...
-            
-            // ===== 신청자 전체 목록 (참고용) =====
-            // 우왁굳이 9명 뽑으면 위에 추가하고, 아래는 주석처리 또는 삭제
-            
-            { name: '유키라', tier: 'IRON', position: 'ALL' },
+
+        // ============================================
+        // 👥 버튜버 목록 (전체 신청자)
+        // ============================================
+        const ALL_STREAMERS = [
+            { name: '유키라', tier: 'IRON', position: '올라운더' },
             { name: '최또', tier: 'UNRANKED', position: '원딜' },
             { name: '햇비', tier: 'IRON', position: '탑' },
             { name: '워비스', tier: 'GOLD', position: '탑' },
-            { name: '히어로레드', tier: 'SILVER', position: 'ALL' },
+            { name: '히어로레드', tier: 'SILVER', position: '올라운더' },
             { name: '호아띠', tier: 'DIAMOND', position: '미드' },
             { name: '나옹이빵', tier: 'PLATINUM', position: '서폿' },
-            { name: '포도네', tier: 'DIAMOND', position: 'ALL' },
+            { name: '포도네', tier: 'DIAMOND', position: '올라운더' },
             { name: '쇼지니', tier: 'GOLD', position: '원딜' },
-            { name: '한결', tier: 'SILVER', position: 'ALL' },
+            { name: '한결', tier: 'SILVER', position: '올라운더' },
             { name: '깐숙', tier: 'MASTER', position: '미드' },
             { name: '김킁지', tier: 'BRONZE', position: '정글' },
             { name: '김땃쥐', tier: 'PLATINUM', position: '서폿' },
@@ -548,7 +536,7 @@
             { name: '몽나', tier: 'BRONZE', position: '정글' },
             { name: '백야', tier: 'SILVER', position: '원딜' },
             { name: '성여올', tier: 'BRONZE', position: '탑' },
-            { name: '시루냥', tier: 'SILVER', position: 'ALL' },
+            { name: '시루냥', tier: 'SILVER', position: '올라운더' },
             { name: '햄쩌구', tier: 'BRONZE', position: '서폿' },
             { name: '채니', tier: 'GOLD', position: '원딜' },
             { name: '이릴', tier: 'SILVER', position: '탑' },
@@ -562,7 +550,7 @@
             { name: '루디딕', tier: 'IRON', position: '탑' },
             { name: '와앙이', tier: 'BRONZE', position: '서폿' },
             { name: '파니', tier: 'BRONZE', position: '미드' },
-            { name: '때찌', tier: 'UNRANKED', position: 'ALL' },
+            { name: '때찌', tier: 'UNRANKED', position: '올라운더' },
             { name: '심포', tier: 'GOLD', position: '서폿' },
             { name: '보디가드불독', tier: 'SILVER', position: '서폿' },
             { name: '히키킹', tier: 'SILVER', position: '탑' },
@@ -572,18 +560,18 @@
             { name: '도깨비루딘', tier: 'BRONZE', position: '서폿' },
             { name: '빅토리', tier: 'PLATINUM', position: '서폿' },
             { name: '땡글땡글포포', tier: 'IRON', position: '서폿' },
-            { name: '곽춘식', tier: 'EMERALD', position: 'ALL' },
+            { name: '곽춘식', tier: 'EMERALD', position: '올라운더' },
             { name: '이덕수', tier: 'BRONZE', position: '탑' },
             { name: '한아밍', tier: 'EMERALD', position: '서폿' },
-            { name: '피카온', tier: 'GOLD', position: 'ALL' },
-            { name: '천양', tier: 'PLATINUM', position: 'ALL' },
+            { name: '피카온', tier: 'GOLD', position: '올라운더' },
+            { name: '천양', tier: 'PLATINUM', position: '올라운더' },
             { name: '꿀빵지', tier: 'BRONZE', position: '서폿' },
             { name: '투냥츠', tier: 'SILVER', position: '미드' },
             { name: '수셈이', tier: 'DIAMOND', position: '탑' },
             { name: '다뮤', tier: 'PLATINUM', position: '미드' },
             { name: '마익호', tier: 'SILVER', position: '탑' },
             { name: '주닝요1', tier: 'BRONZE', position: '탑' },
-            { name: '미르', tier: 'UNRANKED', position: 'ALL' },
+            { name: '미르', tier: 'UNRANKED', position: '올라운더' },
             { name: '묭씨', tier: 'IRON', position: '탑' },
             { name: '문모모', tier: 'SILVER', position: '탑' },
             { name: '카푸', tier: 'IRON', position: '정글' },
@@ -598,10 +586,7 @@
             red: { '탑': null, '정글': null, '미드': null, '원딜': null, '서폿': null }
         };
 
-        let currentTeam = null;
-        let currentPosition = null;
-
-        // 티어 이미지
+        // 티어 정보
         const TIER_IMAGES = {
             'IRON': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/iron.png',
             'BRONZE': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/bronze.png',
@@ -628,9 +613,10 @@
         };
 
         // ID 부여
-        STREAMERS.forEach((s, i) => s.id = i);
+        TODAY_ROSTER.forEach((s, i) => s.id = i);
+        ALL_STREAMERS.forEach((s, i) => s.id = i + 1000);
 
-        // 팀에 배치된 스트리머 ID 목록
+        // 팀에 배치된 ID 목록
         function getAssignedIds() {
             const ids = [];
             ['blue', 'red'].forEach(team => {
@@ -641,26 +627,39 @@
             return ids;
         }
 
-        // 스트리머 목록 렌더링
+        // 등록 명단 렌더링
+        function renderRoster() {
+            const grid = document.getElementById('roster-grid');
+            const assignedIds = getAssignedIds();
+            document.getElementById('roster-count').textContent = TODAY_ROSTER.length;
+
+            grid.innerHTML = TODAY_ROSTER.map(s => `
+                <div class="roster-card ${assignedIds.includes(s.id) ? 'in-team' : ''}" 
+                     draggable="true" 
+                     data-id="${s.id}"
+                     ondragstart="handleDragStart(event)"
+                     ondragend="handleDragEnd(event)">
+                    <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
+                    <div class="info">
+                        <div class="name">${s.name}</div>
+                        <div class="detail">${TIER_NAMES[s.tier]} • ${s.position}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // 버튜버 목록 렌더링
         function renderStreamers() {
             const list = document.getElementById('streamer-list');
-            const count = document.getElementById('streamer-count');
-            const assignedIds = getAssignedIds();
+            document.getElementById('streamer-count').textContent = ALL_STREAMERS.length;
 
-            count.textContent = STREAMERS.length;
-
-            if (STREAMERS.length === 0) {
-                list.innerHTML = '<div class="empty-state">등록된 스트리머가 없습니다</div>';
-                return;
-            }
-
-            list.innerHTML = STREAMERS.map(s => `
-                <div class="streamer-card ${assignedIds.includes(s.id) ? 'in-team' : ''}">
+            list.innerHTML = ALL_STREAMERS.map(s => `
+                <div class="streamer-card">
                     <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
-                    <div class="streamer-info">
-                        <div class="streamer-name">${s.name}</div>
-                        <div class="streamer-detail">
-                            <span>${TIER_NAMES[s.tier]}</span>
+                    <div class="info">
+                        <div class="name">${s.name}</div>
+                        <div class="detail">
+                            ${TIER_NAMES[s.tier]}
                             <span class="position-badge">${s.position}</span>
                         </div>
                     </div>
@@ -674,7 +673,7 @@
                 Object.keys(teams[team]).forEach(position => {
                     const slot = document.querySelector(`.team-slot[data-team="${team}"][data-position="${position}"]`);
                     const streamerId = teams[team][position];
-                    const streamer = STREAMERS.find(s => s.id === streamerId);
+                    const streamer = TODAY_ROSTER.find(s => s.id === streamerId);
 
                     if (streamer) {
                         slot.classList.add('filled');
@@ -685,13 +684,13 @@
                                 <div class="slot-name">${streamer.name}</div>
                                 <div class="slot-detail">${TIER_NAMES[streamer.tier]} • 주 ${streamer.position}</div>
                             </div>
-                            <button class="slot-remove" onclick="event.stopPropagation(); removeFromSlot('${team}', '${position}')">✕</button>
+                            <button class="slot-remove" onclick="removeFromSlot('${team}', '${position}')">✕</button>
                         `;
                     } else {
                         slot.classList.remove('filled');
                         slot.innerHTML = `
                             <div class="slot-position">${position}</div>
-                            <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
                         `;
                     }
                 });
@@ -704,7 +703,7 @@
         function updateTeamAvg(team) {
             const members = Object.values(teams[team])
                 .filter(id => id !== null)
-                .map(id => STREAMERS.find(s => s.id === id))
+                .map(id => TODAY_ROSTER.find(s => s.id === id))
                 .filter(s => s);
 
             if (members.length === 0) {
@@ -719,53 +718,60 @@
             document.getElementById(`${team}-avg`).textContent = `평균: ${TIER_NAMES[avgTier]} (${members.length}명)`;
         }
 
-        // 모달 열기
-        function openModal(team, position) {
-            currentTeam = team;
-            currentPosition = position;
-            document.getElementById('modal-position').textContent = position;
+        // 드래그 앤 드롭
+        let draggedId = null;
 
-            const assignedIds = getAssignedIds();
-            const currentSlot = teams[team][position];
-
-            const available = STREAMERS.filter(s => !assignedIds.includes(s.id) || s.id === currentSlot);
-
-            if (available.length === 0) {
-                document.getElementById('modal-list').innerHTML = '<div class="empty-state">배치 가능한 스트리머가 없습니다</div>';
-            } else {
-                document.getElementById('modal-list').innerHTML = available.map(s => `
-                    <div class="modal-streamer" onclick="selectStreamer(${s.id})">
-                        <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}" style="width:32px;height:32px;">
-                        <div>
-                            <div style="font-weight:600;">${s.name}</div>
-                            <div style="font-size:12px;color:var(--text-muted);">${TIER_NAMES[s.tier]} • ${s.position}</div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-
-            document.getElementById('modal').classList.add('show');
+        function handleDragStart(e) {
+            draggedId = parseInt(e.target.dataset.id);
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
         }
 
-        // 모달 닫기
-        function closeModal(event) {
-            if (event && event.target !== event.currentTarget) return;
-            document.getElementById('modal').classList.remove('show');
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+            document.querySelectorAll('.team-slot').forEach(slot => {
+                slot.classList.remove('drag-over');
+            });
         }
 
-        // 스트리머 선택
-        function selectStreamer(id) {
-            teams[currentTeam][currentPosition] = id;
-            renderTeams();
-            renderStreamers();
-            closeModal();
-        }
+        // 드롭 영역 설정
+        document.querySelectorAll('.team-slot').forEach(slot => {
+            slot.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                slot.classList.add('drag-over');
+            });
+
+            slot.addEventListener('dragleave', () => {
+                slot.classList.remove('drag-over');
+            });
+
+            slot.addEventListener('drop', (e) => {
+                e.preventDefault();
+                slot.classList.remove('drag-over');
+                
+                const team = slot.dataset.team;
+                const position = slot.dataset.position;
+                
+                // 이미 배치된 곳이 있으면 제거
+                ['blue', 'red'].forEach(t => {
+                    Object.keys(teams[t]).forEach(p => {
+                        if (teams[t][p] === draggedId) {
+                            teams[t][p] = null;
+                        }
+                    });
+                });
+                
+                teams[team][position] = draggedId;
+                renderTeams();
+                renderRoster();
+            });
+        });
 
         // 슬롯에서 제거
         function removeFromSlot(team, position) {
             teams[team][position] = null;
             renderTeams();
-            renderStreamers();
+            renderRoster();
         }
 
         // 팀 초기화
@@ -775,12 +781,13 @@
                 red: { '탑': null, '정글': null, '미드': null, '원딜': null, '서폿': null }
             };
             renderTeams();
-            renderStreamers();
+            renderRoster();
         }
 
         // 초기 렌더링
-        renderStreamers();
+        renderRoster();
         renderTeams();
+        renderStreamers();
     </script>
 </body>
 </html>
