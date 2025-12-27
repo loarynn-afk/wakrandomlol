@@ -121,7 +121,7 @@
         .roster-card {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 12px 16px;
             display: flex;
             align-items: center;
@@ -147,9 +147,17 @@
             pointer-events: none;
         }
 
+        .roster-card .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg-card);
+        }
+
         .roster-card .tier-icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
         }
 
         .roster-card .info {
@@ -165,6 +173,9 @@
         .roster-card .detail {
             font-size: 11px;
             color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         /* 팀 배치 */
@@ -214,7 +225,7 @@
             background: var(--bg-card);
             border: 2px dashed var(--border);
             border-radius: 8px;
-            min-height: 56px;
+            min-height: 60px;
             transition: all 0.2s;
         }
 
@@ -225,7 +236,16 @@
 
         .team-slot.filled {
             border-style: solid;
-            cursor: pointer;
+            cursor: grab;
+        }
+
+        .team-slot.filled:active {
+            cursor: grabbing;
+        }
+
+        .team-slot.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
         }
 
         .slot-position {
@@ -242,9 +262,18 @@
             flex-shrink: 0;
         }
 
+        .slot-profile {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-secondary);
+        }
+
         .slot-tier {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             flex-shrink: 0;
         }
 
@@ -312,46 +341,66 @@
         /* 버튜버 목록 */
         .streamer-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
             margin-bottom: 30px;
         }
 
         .streamer-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 12px;
+            border-radius: 12px;
+            padding: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
-        .streamer-card .tier-icon {
-            width: 32px;
-            height: 32px;
+        .streamer-card .profile-img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            background: var(--bg-secondary);
         }
 
         .streamer-card .info {
             flex: 1;
+            min-width: 0;
         }
 
         .streamer-card .name {
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
+            margin-bottom: 4px;
         }
 
-        .streamer-card .detail {
-            font-size: 11px;
-            color: var(--text-muted);
+        .streamer-card .tier-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+        }
+
+        .streamer-card .tier-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .streamer-card .tier-name {
+            font-size: 12px;
+            color: var(--text-secondary);
         }
 
         .position-badge {
-            padding: 2px 6px;
+            display: inline-block;
+            padding: 3px 8px;
             background: var(--accent-blue);
             border-radius: 4px;
-            font-size: 10px;
+            font-size: 11px;
             color: white;
+            font-weight: 500;
         }
 
         .drag-hint {
@@ -381,6 +430,7 @@
             header { padding: 15px 20px; }
             .hero h1 { font-size: 24px; }
             .roster-grid { flex-direction: column; }
+            .streamer-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -400,7 +450,7 @@
         <!-- 오늘의 등록 명단 -->
         <h2 class="section-title">🎮 오늘의 참가자 (<span id="roster-count">10</span>명)</h2>
         <div class="roster-section">
-            <div class="drag-hint">💡 아래 카드를 드래그하여 팀 슬롯에 놓으세요</div>
+            <div class="drag-hint">💡 카드를 드래그하여 팀 슬롯에 배치 • 슬롯 간 이동도 가능!</div>
             <div id="roster-grid" class="roster-grid"></div>
         </div>
 
@@ -487,18 +537,20 @@
         // ============================================
         // 🎮 오늘의 참가자 (10명) - 우왁굳이 뽑은 사람들
         // ============================================
+        // soopId: SOOP 아이디 (프로필 이미지용)
+        // 프로필 이미지 URL 패턴: https://profile.img.sooplive.co.kr/LOGO/${id앞2글자}/${id}/${id}.jpg
+        // ============================================
         const TODAY_ROSTER = [
-            { name: '우왁굳', tier: 'BRONZE', position: '올라운더' },
-            // 아래에 뽑힌 9명 추가
-            { name: '천양', tier: 'PLATINUM', position: '올라운더' },
-            { name: '깐숙', tier: 'MASTER', position: '미드' },
-            { name: '김유나', tier: 'MASTER', position: '서폿' },
-            { name: '포도네', tier: 'DIAMOND', position: '올라운더' },
-            { name: '호아띠', tier: 'DIAMOND', position: '미드' },
-            { name: '곽춘식', tier: 'EMERALD', position: '올라운더' },
-            { name: '한아밍', tier: 'EMERALD', position: '서폿' },
-            { name: '빅토리', tier: 'PLATINUM', position: '서폿' },
-            { name: '문모모', tier: 'SILVER', position: '탑' },
+            { name: '우왁굳', tier: 'BRONZE', position: '올라운더', soopId: 'woowakgood' },
+            { name: '천양', tier: 'PLATINUM', position: '올라운더', soopId: '243000' },
+            { name: '깐숙', tier: 'MASTER', position: '미드', soopId: 'nangnan' },
+            { name: '김유나', tier: 'MASTER', position: '서폿', soopId: 'yuna1024' },
+            { name: '포도네', tier: 'DIAMOND', position: '올라운더', soopId: 'podone1104' },
+            { name: '호아띠', tier: 'DIAMOND', position: '미드', soopId: 'y2s161451' },
+            { name: '곽춘식', tier: 'EMERALD', position: '올라운더', soopId: 'kwakchunshik' },
+            { name: '한아밍', tier: 'EMERALD', position: '서폿', soopId: 'kim91709' },
+            { name: '빅토리', tier: 'PLATINUM', position: '서폿', soopId: 'toryvac' },
+            { name: '문모모', tier: 'SILVER', position: '탑', soopId: 'doormomo' },
         ];
         // ============================================
 
@@ -506,77 +558,77 @@
         // 👥 버튜버 목록 (전체 신청자)
         // ============================================
         const ALL_STREAMERS = [
-            { name: '유키라', tier: 'IRON', position: '올라운더' },
-            { name: '최또', tier: 'UNRANKED', position: '원딜' },
-            { name: '햇비', tier: 'IRON', position: '탑' },
-            { name: '워비스', tier: 'GOLD', position: '탑' },
-            { name: '히어로레드', tier: 'SILVER', position: '올라운더' },
-            { name: '호아띠', tier: 'DIAMOND', position: '미드' },
-            { name: '나옹이빵', tier: 'PLATINUM', position: '서폿' },
-            { name: '포도네', tier: 'DIAMOND', position: '올라운더' },
-            { name: '쇼지니', tier: 'GOLD', position: '원딜' },
-            { name: '한결', tier: 'SILVER', position: '올라운더' },
-            { name: '깐숙', tier: 'MASTER', position: '미드' },
-            { name: '김킁지', tier: 'BRONZE', position: '정글' },
-            { name: '김땃쥐', tier: 'PLATINUM', position: '서폿' },
-            { name: '쥬멩이', tier: 'SILVER', position: '서폿' },
-            { name: '냥쏘', tier: 'SILVER', position: '서폿' },
-            { name: '비즈니스킴', tier: 'IRON', position: '서폿' },
-            { name: '구월이', tier: 'BRONZE', position: '서폿' },
-            { name: '어쩜냥이', tier: 'BRONZE', position: '미드' },
-            { name: '편덕희', tier: 'GOLD', position: '서폿' },
-            { name: '복순덕', tier: 'SILVER', position: '정글' },
-            { name: '푸마고치', tier: 'IRON', position: '정글' },
-            { name: '하밍', tier: 'BRONZE', position: '서폿' },
-            { name: '해파린', tier: 'GOLD', position: '서폿' },
-            { name: '새마요', tier: 'BRONZE', position: '탑' },
-            { name: '뇽이', tier: 'BRONZE', position: '탑' },
-            { name: '바냐', tier: 'BRONZE', position: '미드' },
-            { name: '도페', tier: 'GOLD', position: '서폿' },
-            { name: '몽나', tier: 'BRONZE', position: '정글' },
-            { name: '백야', tier: 'SILVER', position: '원딜' },
-            { name: '성여올', tier: 'BRONZE', position: '탑' },
-            { name: '시루냥', tier: 'SILVER', position: '올라운더' },
-            { name: '햄쩌구', tier: 'BRONZE', position: '서폿' },
-            { name: '채니', tier: 'GOLD', position: '원딜' },
-            { name: '이릴', tier: 'SILVER', position: '탑' },
-            { name: '김유나', tier: 'MASTER', position: '서폿' },
-            { name: '뚜닝', tier: 'GOLD', position: '서폿' },
-            { name: '기찬하', tier: 'BRONZE', position: '미드' },
-            { name: '떵규', tier: 'SILVER', position: '정글' },
-            { name: '공도리', tier: 'GOLD', position: '탑' },
-            { name: '재닌', tier: 'UNRANKED', position: '탑' },
-            { name: '호미밍', tier: 'SILVER', position: '정글' },
-            { name: '루디딕', tier: 'IRON', position: '탑' },
-            { name: '와앙이', tier: 'BRONZE', position: '서폿' },
-            { name: '파니', tier: 'BRONZE', position: '미드' },
-            { name: '때찌', tier: 'UNRANKED', position: '올라운더' },
-            { name: '심포', tier: 'GOLD', position: '서폿' },
-            { name: '보디가드불독', tier: 'SILVER', position: '서폿' },
-            { name: '히키킹', tier: 'SILVER', position: '탑' },
-            { name: '코렛트', tier: 'SILVER', position: '정글' },
-            { name: '윤이제', tier: 'BRONZE', position: '원딜' },
-            { name: '임하밍', tier: 'SILVER', position: '원딜' },
-            { name: '도깨비루딘', tier: 'BRONZE', position: '서폿' },
-            { name: '빅토리', tier: 'PLATINUM', position: '서폿' },
-            { name: '땡글땡글포포', tier: 'IRON', position: '서폿' },
-            { name: '곽춘식', tier: 'EMERALD', position: '올라운더' },
-            { name: '이덕수', tier: 'BRONZE', position: '탑' },
-            { name: '한아밍', tier: 'EMERALD', position: '서폿' },
-            { name: '피카온', tier: 'GOLD', position: '올라운더' },
-            { name: '천양', tier: 'PLATINUM', position: '올라운더' },
-            { name: '꿀빵지', tier: 'BRONZE', position: '서폿' },
-            { name: '투냥츠', tier: 'SILVER', position: '미드' },
-            { name: '수셈이', tier: 'DIAMOND', position: '탑' },
-            { name: '다뮤', tier: 'PLATINUM', position: '미드' },
-            { name: '마익호', tier: 'SILVER', position: '탑' },
-            { name: '주닝요1', tier: 'BRONZE', position: '탑' },
-            { name: '미르', tier: 'UNRANKED', position: '올라운더' },
-            { name: '묭씨', tier: 'IRON', position: '탑' },
-            { name: '문모모', tier: 'SILVER', position: '탑' },
-            { name: '카푸', tier: 'IRON', position: '정글' },
-            { name: '섄디한', tier: 'IRON', position: '원딜' },
-            { name: '독고혜지', tier: 'IRON', position: '탑' },
+            { name: '유키라', tier: 'IRON', position: '올라운더', soopId: 'kirababy2' },
+            { name: '최또', tier: 'UNRANKED', position: '원딜', soopId: 'choiagain' },
+            { name: '햇비', tier: 'IRON', position: '탑', soopId: 'htvv2i' },
+            { name: '워비스', tier: 'GOLD', position: '탑', soopId: 'tguswk023' },
+            { name: '히어로레드', tier: 'SILVER', position: '올라운더', soopId: 'ttobeherored' },
+            { name: '호아띠', tier: 'DIAMOND', position: '미드', soopId: 'y2s161451' },
+            { name: '나옹이빵', tier: 'PLATINUM', position: '서폿', soopId: 'naong2bbang' },
+            { name: '포도네', tier: 'DIAMOND', position: '올라운더', soopId: 'podone1104' },
+            { name: '쇼지니', tier: 'GOLD', position: '원딜', soopId: 'choujini' },
+            { name: '한결', tier: 'SILVER', position: '올라운더', soopId: 'kaksjak0730' },
+            { name: '깐숙', tier: 'MASTER', position: '미드', soopId: 'nangnan' },
+            { name: '김킁지', tier: 'BRONZE', position: '정글', soopId: 'keunggee1004' },
+            { name: '김땃쥐', tier: 'PLATINUM', position: '서폿', soopId: 'nmachuu060' },
+            { name: '쥬멩이', tier: 'SILVER', position: '서폿', soopId: 'ju010228' },
+            { name: '냥쏘', tier: 'SILVER', position: '서폿', soopId: 'leesoi34' },
+            { name: '비즈니스킴', tier: 'IRON', position: '서폿', soopId: 'dks336' },
+            { name: '구월이', tier: 'BRONZE', position: '서폿', soopId: 'isq1158' },
+            { name: '어쩜냥이', tier: 'BRONZE', position: '미드', soopId: 'hhr001234' },
+            { name: '편덕희', tier: 'GOLD', position: '서폿', soopId: 'pyeondh303kr' },
+            { name: '복순덕', tier: 'SILVER', position: '정글', soopId: 'bsd030' },
+            { name: '푸마고치', tier: 'IRON', position: '정글', soopId: 'fumagochi' },
+            { name: '하밍', tier: 'BRONZE', position: '서폿', soopId: 'star124' },
+            { name: '해파린', tier: 'GOLD', position: '서폿', soopId: 'haepalin' },
+            { name: '새마요', tier: 'BRONZE', position: '탑', soopId: 'newmayo' },
+            { name: '뇽이', tier: 'BRONZE', position: '탑', soopId: 'jcl3250' },
+            { name: '바냐', tier: 'BRONZE', position: '미드', soopId: 'luvosis1' },
+            { name: '도페', tier: 'GOLD', position: '서폿', soopId: 'likethis1125' },
+            { name: '몽나', tier: 'BRONZE', position: '정글', soopId: 'pinktape8' },
+            { name: '백야', tier: 'SILVER', position: '원딜', soopId: 'p0ppy628' },
+            { name: '성여올', tier: 'BRONZE', position: '탑', soopId: 'tjdgk31470' },
+            { name: '시루냥', tier: 'SILVER', position: '올라운더', soopId: 'xirus2' },
+            { name: '햄쩌구', tier: 'BRONZE', position: '서폿', soopId: 'zzeogoo' },
+            { name: '채니', tier: 'GOLD', position: '원딜', soopId: 'k1baaa' },
+            { name: '이릴', tier: 'SILVER', position: '탑', soopId: 'irrilll' },
+            { name: '김유나', tier: 'MASTER', position: '서폿', soopId: 'yuna1024' },
+            { name: '뚜닝', tier: 'GOLD', position: '서폿', soopId: 'ioocom' },
+            { name: '기찬하', tier: 'BRONZE', position: '미드', soopId: 'khj011219' },
+            { name: '떵규', tier: 'SILVER', position: '정글', soopId: 'sunglim001' },
+            { name: '공도리', tier: 'GOLD', position: '탑', soopId: 'swcmnb67' },
+            { name: '재닌', tier: 'UNRANKED', position: '탑', soopId: 'janine95kim' },
+            { name: '호미밍', tier: 'SILVER', position: '정글', soopId: 'donggeul2' },
+            { name: '루디딕', tier: 'IRON', position: '탑', soopId: 'mnomno55' },
+            { name: '와앙이', tier: 'BRONZE', position: '서폿', soopId: 'waanwaan' },
+            { name: '파니', tier: 'BRONZE', position: '미드', soopId: 'baeksoon2' },
+            { name: '때찌', tier: 'UNRANKED', position: '올라운더', soopId: 'nwlsfl007' },
+            { name: '심포', tier: 'GOLD', position: '서폿', soopId: 'popo1118' },
+            { name: '보디가드불독', tier: 'SILVER', position: '서폿', soopId: 'bulgom77' },
+            { name: '히키킹', tier: 'SILVER', position: '탑', soopId: 'hikiking' },
+            { name: '코렛트', tier: 'SILVER', position: '정글', soopId: 'collet11' },
+            { name: '윤이제', tier: 'BRONZE', position: '원딜', soopId: 'eze1017' },
+            { name: '임하밍', tier: 'SILVER', position: '원딜', soopId: 'imha22' },
+            { name: '도깨비루딘', tier: 'BRONZE', position: '서폿', soopId: 'xxxx922' },
+            { name: '빅토리', tier: 'PLATINUM', position: '서폿', soopId: 'toryvac' },
+            { name: '땡글땡글포포', tier: 'IRON', position: '서폿', soopId: 'roundpopo' },
+            { name: '곽춘식', tier: 'EMERALD', position: '올라운더', soopId: 'kwakchunshik' },
+            { name: '이덕수', tier: 'BRONZE', position: '탑', soopId: '2ducksoo' },
+            { name: '한아밍', tier: 'EMERALD', position: '서폿', soopId: 'kim91709' },
+            { name: '피카온', tier: 'GOLD', position: '올라운더', soopId: 'bluesuncity' },
+            { name: '천양', tier: 'PLATINUM', position: '올라운더', soopId: '243000' },
+            { name: '꿀빵지', tier: 'BRONZE', position: '서폿', soopId: '2059865' },
+            { name: '투냥츠', tier: 'SILVER', position: '미드', soopId: 'toocats' },
+            { name: '수셈이', tier: 'DIAMOND', position: '탑', soopId: 'soosemi432' },
+            { name: '다뮤', tier: 'PLATINUM', position: '미드', soopId: 'not15987' },
+            { name: '마익호', tier: 'SILVER', position: '탑', soopId: 'maickhoe' },
+            { name: '주닝요1', tier: 'BRONZE', position: '탑', soopId: 'aza4986' },
+            { name: '미르', tier: 'UNRANKED', position: '올라운더', soopId: 'alice427' },
+            { name: '묭씨', tier: 'IRON', position: '탑', soopId: 'secymyong' },
+            { name: '문모모', tier: 'SILVER', position: '탑', soopId: 'doormomo' },
+            { name: '카푸', tier: 'IRON', position: '정글', soopId: 'kappuchan' },
+            { name: '섄디한', tier: 'IRON', position: '원딜', soopId: 'shandyhan' },
+            { name: '독고혜지', tier: 'IRON', position: '탑', soopId: 'dokkhye0000' },
         ];
         // ============================================
 
@@ -612,9 +664,23 @@
             'PLATINUM': 5, 'EMERALD': 6, 'DIAMOND': 7, 'MASTER': 8, 'GRANDMASTER': 9, 'CHALLENGER': 10
         };
 
+        // SOOP 프로필 이미지 URL 생성
+        function getProfileImg(soopId) {
+            if (!soopId) return '';
+            const prefix = soopId.substring(0, 2);
+            return `https://profile.img.sooplive.co.kr/LOGO/${prefix}/${soopId}/${soopId}.jpg`;
+        }
+
+        // 기본 프로필 이미지 (로드 실패시)
+        const DEFAULT_PROFILE = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%2327272a" width="100" height="100"/><text x="50" y="60" text-anchor="middle" fill="%2371717a" font-size="40">?</text></svg>';
+
         // ID 부여
         TODAY_ROSTER.forEach((s, i) => s.id = i);
         ALL_STREAMERS.forEach((s, i) => s.id = i + 1000);
+
+        // 드래그 앤 드롭
+        let draggedId = null;
+        let draggedFromSlot = null;
 
         // 팀에 배치된 ID 목록
         function getAssignedIds() {
@@ -639,10 +705,14 @@
                      data-id="${s.id}"
                      ondragstart="handleDragStart(event)"
                      ondragend="handleDragEnd(event)">
+                    <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="this.src='${DEFAULT_PROFILE}'" alt="">
                     <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
                     <div class="info">
                         <div class="name">${s.name}</div>
-                        <div class="detail">${TIER_NAMES[s.tier]} • ${s.position}</div>
+                        <div class="detail">
+                            <span>${TIER_NAMES[s.tier]}</span>
+                            <span class="position-badge">${s.position}</span>
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -655,13 +725,14 @@
 
             list.innerHTML = ALL_STREAMERS.map(s => `
                 <div class="streamer-card">
-                    <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
+                    <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="this.src='${DEFAULT_PROFILE}'" alt="">
                     <div class="info">
                         <div class="name">${s.name}</div>
-                        <div class="detail">
-                            ${TIER_NAMES[s.tier]}
-                            <span class="position-badge">${s.position}</span>
+                        <div class="tier-row">
+                            <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
+                            <span class="tier-name">${TIER_NAMES[s.tier]}</span>
                         </div>
+                        <span class="position-badge">${s.position}</span>
                     </div>
                 </div>
             `).join('');
@@ -677,17 +748,20 @@
 
                     if (streamer) {
                         slot.classList.add('filled');
+                        slot.setAttribute('draggable', 'true');
                         slot.innerHTML = `
                             <div class="slot-position">${position}</div>
+                            <img class="slot-profile" src="${getProfileImg(streamer.soopId)}" onerror="this.src='${DEFAULT_PROFILE}'" alt="">
                             <img class="slot-tier" src="${TIER_IMAGES[streamer.tier]}" alt="${streamer.tier}">
                             <div class="slot-info">
                                 <div class="slot-name">${streamer.name}</div>
                                 <div class="slot-detail">${TIER_NAMES[streamer.tier]} • 주 ${streamer.position}</div>
                             </div>
-                            <button class="slot-remove" onclick="removeFromSlot('${team}', '${position}')">✕</button>
+                            <button class="slot-remove" onclick="event.stopPropagation(); removeFromSlot('${team}', '${position}')">✕</button>
                         `;
                     } else {
                         slot.classList.remove('filled');
+                        slot.setAttribute('draggable', 'false');
                         slot.innerHTML = `
                             <div class="slot-position">${position}</div>
                             <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
@@ -697,6 +771,8 @@
 
                 updateTeamAvg(team);
             });
+            
+            setupSlotDragEvents();
         }
 
         // 팀 평균 티어
@@ -718,11 +794,9 @@
             document.getElementById(`${team}-avg`).textContent = `평균: ${TIER_NAMES[avgTier]} (${members.length}명)`;
         }
 
-        // 드래그 앤 드롭
-        let draggedId = null;
-
         function handleDragStart(e) {
             draggedId = parseInt(e.target.dataset.id);
+            draggedFromSlot = null;
             e.target.classList.add('dragging');
             e.dataTransfer.effectAllowed = 'move';
         }
@@ -734,38 +808,69 @@
             });
         }
 
-        // 드롭 영역 설정
-        document.querySelectorAll('.team-slot').forEach(slot => {
-            slot.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                slot.classList.add('drag-over');
-            });
+        // 슬롯 드래그 이벤트 설정
+        function setupSlotDragEvents() {
+            document.querySelectorAll('.team-slot').forEach(slot => {
+                slot.ondragstart = (e) => {
+                    if (slot.classList.contains('filled')) {
+                        const team = slot.dataset.team;
+                        const position = slot.dataset.position;
+                        draggedId = teams[team][position];
+                        draggedFromSlot = { team, position };
+                        slot.classList.add('dragging');
+                        e.dataTransfer.effectAllowed = 'move';
+                    }
+                };
 
-            slot.addEventListener('dragleave', () => {
-                slot.classList.remove('drag-over');
-            });
-
-            slot.addEventListener('drop', (e) => {
-                e.preventDefault();
-                slot.classList.remove('drag-over');
-                
-                const team = slot.dataset.team;
-                const position = slot.dataset.position;
-                
-                // 이미 배치된 곳이 있으면 제거
-                ['blue', 'red'].forEach(t => {
-                    Object.keys(teams[t]).forEach(p => {
-                        if (teams[t][p] === draggedId) {
-                            teams[t][p] = null;
-                        }
+                slot.ondragend = (e) => {
+                    slot.classList.remove('dragging');
+                    document.querySelectorAll('.team-slot').forEach(s => {
+                        s.classList.remove('drag-over');
                     });
-                });
-                
-                teams[team][position] = draggedId;
-                renderTeams();
-                renderRoster();
+                };
+
+                slot.ondragover = (e) => {
+                    e.preventDefault();
+                    if (!slot.classList.contains('dragging')) {
+                        slot.classList.add('drag-over');
+                    }
+                };
+
+                slot.ondragleave = () => {
+                    slot.classList.remove('drag-over');
+                };
+
+                slot.ondrop = (e) => {
+                    e.preventDefault();
+                    slot.classList.remove('drag-over');
+                    
+                    if (draggedId === null) return;
+                    
+                    const targetTeam = slot.dataset.team;
+                    const targetPosition = slot.dataset.position;
+                    
+                    if (draggedFromSlot) {
+                        teams[draggedFromSlot.team][draggedFromSlot.position] = null;
+                    } else {
+                        ['blue', 'red'].forEach(t => {
+                            Object.keys(teams[t]).forEach(p => {
+                                if (teams[t][p] === draggedId) {
+                                    teams[t][p] = null;
+                                }
+                            });
+                        });
+                    }
+                    
+                    teams[targetTeam][targetPosition] = draggedId;
+                    
+                    draggedId = null;
+                    draggedFromSlot = null;
+                    
+                    renderTeams();
+                    renderRoster();
+                };
             });
-        });
+        }
 
         // 슬롯에서 제거
         function removeFromSlot(team, position) {
