@@ -541,7 +541,7 @@
         // 프로필 이미지 URL 패턴: https://profile.img.sooplive.co.kr/LOGO/${id앞2글자}/${id}/${id}.jpg
         // ============================================
         const TODAY_ROSTER = [
-            { name: '우왁굳', tier: 'BRONZE', position: '올라운더', soopId: 'woowakgood' },
+            { name: '우왁굳', tier: 'BRONZE', position: '올라운더', soopId: 'ecvhao' },
             { name: '천양', tier: 'PLATINUM', position: '올라운더', soopId: '243000' },
             { name: '깐숙', tier: 'MASTER', position: '미드', soopId: 'nangnan' },
             { name: '김유나', tier: 'MASTER', position: '서폿', soopId: 'yuna1024' },
@@ -672,7 +672,10 @@
         }
 
         // 기본 프로필 이미지 (로드 실패시)
-        const DEFAULT_PROFILE = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%2327272a" width="100" height="100"/><text x="50" y="60" text-anchor="middle" fill="%2371717a" font-size="40">?</text></svg>';
+        function handleImgError(img) {
+            img.onerror = null;
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCBmaWxsPSIjMjcyNzJhIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjIwIiBmaWxsPSIjNTE1MTVhIi8+PHBhdGggZD0iTTIwIDkwYzAtMjUgMTMtNDAgMzAtNDBzMzAgMTUgMzAgNDB6IiBmaWxsPSIjNTE1MTVhIi8+PC9zdmc+';
+        }
 
         // ID 부여
         TODAY_ROSTER.forEach((s, i) => s.id = i);
@@ -705,7 +708,7 @@
                      data-id="${s.id}"
                      ondragstart="handleDragStart(event)"
                      ondragend="handleDragEnd(event)">
-                    <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="this.src='${DEFAULT_PROFILE}'" alt="">
+                    <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="handleImgError(this)" alt="">
                     <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
                     <div class="info">
                         <div class="name">${s.name}</div>
@@ -725,7 +728,7 @@
 
             list.innerHTML = ALL_STREAMERS.map(s => `
                 <div class="streamer-card">
-                    <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="this.src='${DEFAULT_PROFILE}'" alt="">
+                    <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="handleImgError(this)" alt="">
                     <div class="info">
                         <div class="name">${s.name}</div>
                         <div class="tier-row">
@@ -751,7 +754,7 @@
                         slot.setAttribute('draggable', 'true');
                         slot.innerHTML = `
                             <div class="slot-position">${position}</div>
-                            <img class="slot-profile" src="${getProfileImg(streamer.soopId)}" onerror="this.src='${DEFAULT_PROFILE}'" alt="">
+                            <img class="slot-profile" src="${getProfileImg(streamer.soopId)}" onerror="handleImgError(this)" alt="">
                             <img class="slot-tier" src="${TIER_IMAGES[streamer.tier]}" alt="${streamer.tier}">
                             <div class="slot-info">
                                 <div class="slot-name">${streamer.name}</div>
