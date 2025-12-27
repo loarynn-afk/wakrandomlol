@@ -506,28 +506,28 @@
         // { name: '닉네임', tier: '티어', position: '주포지션' }
         //
         // 티어 옵션: UNRANKED, IRON, BRONZE, SILVER, GOLD, PLATINUM, EMERALD, DIAMOND, MASTER, GRANDMASTER, CHALLENGER
-        // 포지션 옵션: 탑, 정글, 미드, 원딜, 서폿, 올라운더
+        // 포지션 옵션: 탑, 정글, 미드, 원딜, 서폿, ALL
         //
         // ============================================
         const STREAMERS = [
             // ===== 오늘 뽑힌 9명 + 우왁굳 =====
-            // { name: '우왁굳', tier: 'BRONZE', position: '올라운더' },
+            // { name: '우왁굳', tier: 'BRONZE', position: 'ALL' },
             // { name: '스트리머1', tier: 'SILVER', position: '탑' },
             // ...
             
             // ===== 신청자 전체 목록 (참고용) =====
             // 우왁굳이 9명 뽑으면 위에 추가하고, 아래는 주석처리 또는 삭제
             
-            { name: '유키라', tier: 'IRON', position: '올라운더' },
+            { name: '유키라', tier: 'IRON', position: 'ALL' },
             { name: '최또', tier: 'UNRANKED', position: '원딜' },
             { name: '햇비', tier: 'IRON', position: '탑' },
             { name: '워비스', tier: 'GOLD', position: '탑' },
-            { name: '히어로레드', tier: 'SILVER', position: '올라운더' },
+            { name: '히어로레드', tier: 'SILVER', position: 'ALL' },
             { name: '호아띠', tier: 'DIAMOND', position: '미드' },
             { name: '나옹이빵', tier: 'PLATINUM', position: '서폿' },
-            { name: '포도네', tier: 'DIAMOND', position: '올라운더' },
+            { name: '포도네', tier: 'DIAMOND', position: 'ALL' },
             { name: '쇼지니', tier: 'GOLD', position: '원딜' },
-            { name: '한결', tier: 'SILVER', position: '올라운더' },
+            { name: '한결', tier: 'SILVER', position: 'ALL' },
             { name: '깐숙', tier: 'MASTER', position: '미드' },
             { name: '김킁지', tier: 'BRONZE', position: '정글' },
             { name: '김땃쥐', tier: 'PLATINUM', position: '서폿' },
@@ -548,7 +548,7 @@
             { name: '몽나', tier: 'BRONZE', position: '정글' },
             { name: '백야', tier: 'SILVER', position: '원딜' },
             { name: '성여올', tier: 'BRONZE', position: '탑' },
-            { name: '시루냥', tier: 'SILVER', position: '올라운더' },
+            { name: '시루냥', tier: 'SILVER', position: 'ALL' },
             { name: '햄쩌구', tier: 'BRONZE', position: '서폿' },
             { name: '채니', tier: 'GOLD', position: '원딜' },
             { name: '이릴', tier: 'SILVER', position: '탑' },
@@ -562,7 +562,7 @@
             { name: '루디딕', tier: 'IRON', position: '탑' },
             { name: '와앙이', tier: 'BRONZE', position: '서폿' },
             { name: '파니', tier: 'BRONZE', position: '미드' },
-            { name: '때찌', tier: 'UNRANKED', position: '올라운더' },
+            { name: '때찌', tier: 'UNRANKED', position: 'ALL' },
             { name: '심포', tier: 'GOLD', position: '서폿' },
             { name: '보디가드불독', tier: 'SILVER', position: '서폿' },
             { name: '히키킹', tier: 'SILVER', position: '탑' },
@@ -572,18 +572,18 @@
             { name: '도깨비루딘', tier: 'BRONZE', position: '서폿' },
             { name: '빅토리', tier: 'PLATINUM', position: '서폿' },
             { name: '땡글땡글포포', tier: 'IRON', position: '서폿' },
-            { name: '곽춘식', tier: 'EMERALD', position: '올라운더' },
+            { name: '곽춘식', tier: 'EMERALD', position: 'ALL' },
             { name: '이덕수', tier: 'BRONZE', position: '탑' },
             { name: '한아밍', tier: 'EMERALD', position: '서폿' },
-            { name: '피카온', tier: 'GOLD', position: '올라운더' },
-            { name: '천양', tier: 'PLATINUM', position: '올라운더' },
+            { name: '피카온', tier: 'GOLD', position: 'ALL' },
+            { name: '천양', tier: 'PLATINUM', position: 'ALL' },
             { name: '꿀빵지', tier: 'BRONZE', position: '서폿' },
             { name: '투냥츠', tier: 'SILVER', position: '미드' },
             { name: '수셈이', tier: 'DIAMOND', position: '탑' },
             { name: '다뮤', tier: 'PLATINUM', position: '미드' },
             { name: '마익호', tier: 'SILVER', position: '탑' },
             { name: '주닝요1', tier: 'BRONZE', position: '탑' },
-            { name: '미르', tier: 'UNRANKED', position: '올라운더' },
+            { name: '미르', tier: 'UNRANKED', position: 'ALL' },
             { name: '묭씨', tier: 'IRON', position: '탑' },
             { name: '문모모', tier: 'SILVER', position: '탑' },
             { name: '카푸', tier: 'IRON', position: '정글' },
