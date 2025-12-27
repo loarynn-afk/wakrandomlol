@@ -3,23 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>올 랜덤 버튜버 억지 밸런스 롤 내전</title>
-    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>올랜덤버튜버억밸롤내전</title>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a25;
-            --bg-hover: #22222f;
-            --accent-blue: #3b82f6;
-            --accent-purple: #8b5cf6;
-            --accent-gold: #fbbf24;
-            --accent-red: #ef4444;
+            --bg-primary: #0f0f14;
+            --bg-secondary: #16161d;
+            --bg-card: #1c1c26;
+            --bg-hover: #252532;
+            --accent-blue: #4a9eff;
+            --accent-purple: #a855f7;
+            --accent-red: #ff5555;
             --accent-green: #22c55e;
             --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            --border: #27272a;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border: #2a2a3a;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,93 +28,226 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
+            line-height: 1.5;
         }
 
-        .bg-effect {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%);
-        }
-
+        /* 헤더 */
         header {
-            position: relative;
-            z-index: 10;
-            padding: 20px 40px;
+            padding: 32px 40px;
+            background: linear-gradient(180deg, rgba(74, 158, 255, 0.1) 0%, transparent 100%);
             border-bottom: 1px solid var(--border);
-            background: rgba(10, 10, 15, 0.8);
-            backdrop-filter: blur(10px);
+            text-align: center;
         }
 
         .logo {
             font-family: 'Black Han Sans', sans-serif;
-            font-size: 24px;
+            font-size: 42px;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: 4px;
         }
 
+        /* 메인 */
         main {
-            position: relative;
-            z-index: 10;
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 40px 24px;
         }
 
-        .hero {
-            text-align: center;
-            padding: 30px 20px;
-            margin-bottom: 30px;
+        /* 섹션 타이틀 */
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
         }
-
-        .hero h1 {
-            font-family: 'Black Han Sans', sans-serif;
-            font-size: 32px;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p { color: var(--text-secondary); font-size: 15px; }
 
         .section-title {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 20px;
             font-size: 18px;
             font-weight: 700;
         }
 
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 24px;
-            background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 2px;
+        .section-title .icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
         }
 
-        /* 등록 명단 (드래그 소스) */
+        .section-title .count {
+            color: var(--accent-blue);
+            font-weight: 400;
+        }
+
+        /* 버튼 */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        /* 오늘의 참가자 */
         .roster-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 30px;
+            padding: 24px;
+            margin-bottom: 32px;
         }
 
+        /* 검색 영역 */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px;
+            padding-left: 48px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: 'Noto Sans KR', sans-serif;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: var(--text-muted);
+        }
+
+        /* 검색 결과 드롭다운 */
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-top: 8px;
+            max-height: 320px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-result-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background: var(--bg-hover);
+        }
+
+        .search-result-item.in-roster {
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .search-result-item .profile-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg-card);
+        }
+
+        .search-result-item .tier-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .search-result-item .info {
+            flex: 1;
+        }
+
+        .search-result-item .name {
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .search-result-item .detail {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .search-result-item .add-text {
+            color: var(--accent-blue);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .search-no-result {
+            padding: 24px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* 참가자 그리드 */
         .roster-grid {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+            gap: 12px;
         }
 
         .roster-card {
@@ -129,12 +261,13 @@
             cursor: grab;
             transition: all 0.2s;
             user-select: none;
+            position: relative;
         }
 
         .roster-card:hover {
             background: var(--bg-hover);
+            border-color: var(--accent-blue);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
         .roster-card.dragging {
@@ -143,16 +276,17 @@
         }
 
         .roster-card.in-team {
-            opacity: 0.3;
+            opacity: 0.35;
             pointer-events: none;
         }
 
         .roster-card .profile-img {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             object-fit: cover;
             background: var(--bg-card);
+            border: 2px solid var(--border);
         }
 
         .roster-card .tier-icon {
@@ -163,6 +297,7 @@
         .roster-card .info {
             display: flex;
             flex-direction: column;
+            gap: 2px;
         }
 
         .roster-card .name {
@@ -171,11 +306,57 @@
         }
 
         .roster-card .detail {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-muted);
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+        }
+
+        .roster-card .remove-btn {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 22px;
+            height: 22px;
+            background: var(--accent-red);
+            border: 2px solid var(--bg-card);
+            border-radius: 50%;
+            color: white;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .roster-card:hover .remove-btn {
+            opacity: 1;
+        }
+
+        .roster-card .profile-img,
+        .roster-card .tier-icon,
+        .roster-card .info {
+            pointer-events: none;
+        }
+
+        .position-badge {
+            padding: 2px 8px;
+            background: var(--accent-blue);
+            border-radius: 4px;
+            font-size: 11px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .roster-empty {
+            width: 100%;
+            text-align: center;
+            padding: 30px;
+            color: var(--text-muted);
+            font-size: 14px;
         }
 
         /* 팀 배치 */
@@ -183,33 +364,36 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 30px;
+            padding: 32px;
+            margin-bottom: 32px;
         }
 
         .teams-container {
             display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 20px;
+            grid-template-columns: 1fr 120px 1fr;
+            gap: 24px;
+            align-items: stretch;
         }
 
         .team {
             background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 16px;
+            border-radius: 16px;
+            padding: 20px;
         }
 
         .team-header {
             text-align: center;
-            padding-bottom: 12px;
-            margin-bottom: 12px;
-            border-bottom: 1px solid var(--border);
+            margin-bottom: 16px;
         }
 
-        .team-header h3 { font-size: 16px; margin-bottom: 4px; }
+        .team-header h3 {
+            font-family: 'Black Han Sans', sans-serif;
+            font-size: 24px;
+            letter-spacing: 2px;
+        }
+
         .team-header.blue h3 { color: var(--accent-blue); }
         .team-header.red h3 { color: var(--accent-red); }
-        .team-avg { font-size: 12px; color: var(--text-muted); }
 
         .team-slots {
             display: flex;
@@ -220,55 +404,52 @@
         .team-slot {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px;
+            gap: 12px;
+            padding: 12px;
             background: var(--bg-card);
             border: 2px dashed var(--border);
-            border-radius: 8px;
-            min-height: 60px;
+            border-radius: 12px;
+            min-height: 64px;
             transition: all 0.2s;
         }
 
         .team-slot.drag-over {
             border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(74, 158, 255, 0.1);
+            border-style: solid;
         }
 
         .team-slot.filled {
             border-style: solid;
+            border-color: var(--border);
             cursor: grab;
         }
 
-        .team-slot.filled:active {
-            cursor: grabbing;
-        }
-
-        .team-slot.dragging {
-            opacity: 0.5;
-            cursor: grabbing;
-        }
+        .team-slot.filled:active { cursor: grabbing; }
+        .team-slot.dragging { opacity: 0.5; }
 
         .slot-position {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             background: var(--bg-secondary);
-            border-radius: 6px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 11px;
-            font-weight: 600;
+            font-size: 12px;
+            font-weight: 700;
             color: var(--text-muted);
             flex-shrink: 0;
         }
 
         .slot-profile {
-            width: 36px;
-            height: 36px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
             background: var(--bg-secondary);
+            border: 2px solid var(--border);
         }
 
         .slot-tier {
@@ -277,92 +458,106 @@
             flex-shrink: 0;
         }
 
-        .slot-info { flex: 1; }
-        .slot-name { font-weight: 600; font-size: 13px; }
-        .slot-detail { font-size: 11px; color: var(--text-muted); }
+        .slot-info { flex: 1; pointer-events: none; }
+        .slot-name { font-weight: 700; font-size: 14px; }
+        .slot-detail { font-size: 12px; color: var(--text-muted); }
+        .slot-profile, .slot-tier, .slot-position { pointer-events: none; }
 
         .slot-remove {
-            width: 24px;
-            height: 24px;
-            background: var(--accent-red);
-            border: none;
-            border-radius: 4px;
-            color: white;
+            width: 28px;
+            height: 28px;
+            background: rgba(255, 85, 85, 0.15);
+            border: 1px solid var(--accent-red);
+            border-radius: 6px;
+            color: var(--accent-red);
             cursor: pointer;
-            font-size: 12px;
+            font-size: 14px;
             opacity: 0;
-            transition: opacity 0.2s;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .team-slot.filled:hover .slot-remove { opacity: 1; }
+        .slot-remove:hover { background: var(--accent-red); color: white; }
+
+        /* VS 배지 */
+        .vs-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
         .vs-badge {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-red));
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-purple) 50%, var(--accent-red) 100%);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Black Han Sans', sans-serif;
-            font-size: 18px;
-            align-self: center;
+            font-size: 36px;
+            color: white;
+            box-shadow: 0 0 50px rgba(168, 85, 247, 0.5);
+            position: relative;
+        }
+
+        .vs-badge::before {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-red));
+            z-index: -1;
+            opacity: 0.4;
+            filter: blur(15px);
         }
 
         .team-actions {
             display: flex;
             justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: 'Noto Sans KR', sans-serif;
-            transition: all 0.2s;
-        }
-
-        .btn-secondary {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--accent-blue);
-            color: var(--text-primary);
+            margin-top: 24px;
         }
 
         /* 버튜버 목록 */
+        .streamer-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
         .streamer-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 12px;
-            margin-bottom: 30px;
         }
 
         .streamer-card {
-            background: var(--bg-card);
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 14px;
             display: flex;
             align-items: center;
             gap: 12px;
+            transition: all 0.2s;
         }
 
+        .streamer-card:hover { background: var(--bg-hover); }
+        .streamer-card.in-roster { opacity: 0.35; }
+
         .streamer-card .profile-img {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             object-fit: cover;
             flex-shrink: 0;
-            background: var(--bg-secondary);
+            background: var(--bg-card);
+            border: 2px solid var(--border);
         }
 
         .streamer-card .info {
@@ -393,181 +588,161 @@
             color: var(--text-secondary);
         }
 
-        .position-badge {
-            display: inline-block;
-            padding: 3px 8px;
-            background: var(--accent-blue);
-            border-radius: 4px;
-            font-size: 11px;
-            color: white;
-            font-weight: 500;
-        }
-
-        .drag-hint {
-            text-align: center;
-            padding: 10px;
-            color: var(--text-muted);
-            font-size: 13px;
-            margin-bottom: 15px;
-        }
-
+        /* 푸터 */
         footer {
-            position: relative;
-            z-index: 10;
             text-align: center;
-            padding: 40px 20px;
+            padding: 40px 24px;
             color: var(--text-muted);
             font-size: 13px;
             border-top: 1px solid var(--border);
         }
 
+        /* 반응형 */
         @media (max-width: 900px) {
             .teams-container { grid-template-columns: 1fr; }
-            .vs-badge { margin: 10px auto; }
+            .vs-section { padding: 16px 0; }
+            .vs-badge { width: 70px; height: 70px; font-size: 28px; }
         }
 
         @media (max-width: 600px) {
-            header { padding: 15px 20px; }
-            .hero h1 { font-size: 24px; }
+            header { padding: 24px 20px; }
+            .logo { font-size: 28px; letter-spacing: 2px; }
+            main { padding: 24px 16px; }
             .roster-grid { flex-direction: column; }
             .streamer-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-effect"></div>
-
     <header>
-        <div class="logo">올랜버억롤내전</div>
+        <div class="logo">올랜덤버튜버억밸롤내전</div>
     </header>
 
     <main>
-        <section class="hero">
-            <h1>올 랜덤 버튜버 억지 밸런스<br>롤 내전</h1>
-            <p>오늘의 참가자를 드래그하여 팀에 배치하세요</p>
-        </section>
-
-        <!-- 오늘의 등록 명단 -->
-        <h2 class="section-title">🎮 오늘의 참가자 (<span id="roster-count">10</span>명)</h2>
+        <!-- 오늘의 참가자 -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">🎮</span>
+                오늘의 참가자 <span class="count">(<span id="roster-count">0</span>명)</span>
+            </h2>
+        </div>
         <div class="roster-section">
-            <div class="drag-hint">💡 카드를 드래그하여 팀 슬롯에 배치 • 슬롯 간 이동도 가능!</div>
-            <div id="roster-grid" class="roster-grid"></div>
+            <!-- 검색 -->
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="search-input" placeholder="버튜버 이름을 검색하여 추가하세요..." autocomplete="off">
+                <div class="search-results" id="search-results"></div>
+            </div>
+            <!-- 참가자 목록 -->
+            <div id="roster-grid" class="roster-grid">
+                <div class="roster-empty">검색창에서 버튜버를 검색하여 추가해주세요</div>
+            </div>
         </div>
 
         <!-- 팀 배치 -->
-        <h2 class="section-title">⚔️ 팀 배치</h2>
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">⚔️</span>
+                팀 배치
+            </h2>
+            <button class="btn btn-secondary" onclick="resetTeams()">🔄 초기화</button>
+        </div>
         <div class="team-builder">
             <div class="teams-container">
                 <div class="team">
                     <div class="team-header blue">
-                        <h3>🔵 블루팀</h3>
-                        <div class="team-avg" id="blue-avg">평균: -</div>
+                        <h3>BLUE</h3>
                     </div>
                     <div class="team-slots" id="blue-team">
                         <div class="team-slot" data-team="blue" data-position="탑">
                             <div class="slot-position">탑</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                         <div class="team-slot" data-team="blue" data-position="정글">
                             <div class="slot-position">정글</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                         <div class="team-slot" data-team="blue" data-position="미드">
                             <div class="slot-position">미드</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                         <div class="team-slot" data-team="blue" data-position="원딜">
                             <div class="slot-position">원딜</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                         <div class="team-slot" data-team="blue" data-position="서폿">
                             <div class="slot-position">서폿</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="vs-badge">VS</div>
+                <div class="vs-section">
+                    <div class="vs-badge">VS</div>
+                </div>
 
                 <div class="team">
                     <div class="team-header red">
-                        <h3>🔴 레드팀</h3>
-                        <div class="team-avg" id="red-avg">평균: -</div>
+                        <h3>RED</h3>
                     </div>
                     <div class="team-slots" id="red-team">
                         <div class="team-slot" data-team="red" data-position="탑">
                             <div class="slot-position">탑</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                         <div class="team-slot" data-team="red" data-position="정글">
                             <div class="slot-position">정글</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                         <div class="team-slot" data-team="red" data-position="미드">
                             <div class="slot-position">미드</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                         <div class="team-slot" data-team="red" data-position="원딜">
                             <div class="slot-position">원딜</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                         <div class="team-slot" data-team="red" data-position="서폿">
                             <div class="slot-position">서폿</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="team-actions">
-                <button class="btn btn-secondary" onclick="resetTeams()">🔄 팀 초기화</button>
-            </div>
         </div>
 
-        <!-- 버튜버 목록 (전체 신청자) -->
-        <h2 class="section-title">👥 버튜버 목록 (<span id="streamer-count">0</span>명)</h2>
-        <div id="streamer-list" class="streamer-list"></div>
+        <!-- 버튜버 목록 -->
+        <div class="section-header">
+            <h2 class="section-title">
+                <span class="icon">👥</span>
+                버튜버 목록 <span class="count">(<span id="streamer-count">0</span>명)</span>
+            </h2>
+        </div>
+        <div class="streamer-section">
+            <div id="streamer-list" class="streamer-list"></div>
+        </div>
     </main>
 
     <footer>
-        <p>올 랜덤 버튜버 억지 밸런스 롤 내전 비공식 팬사이트</p>
+        <p>올랜덤버튜버억밸롤내전 비공식 팬사이트</p>
     </footer>
 
     <script>
         // ============================================
-        // 🎮 오늘의 참가자 (10명) - 우왁굳이 뽑은 사람들
-        // ============================================
-        // soopId: SOOP 아이디 (프로필 이미지용)
-        // 프로필 이미지 URL 패턴: https://profile.img.sooplive.co.kr/LOGO/${id앞2글자}/${id}/${id}.jpg
-        // ============================================
-        const TODAY_ROSTER = [
-            { name: '우왁굳', tier: 'BRONZE', position: '올라운더', soopId: 'ecvhao' },
-            { name: '천양', tier: 'PLATINUM', position: '올라운더', soopId: '243000' },
-            { name: '깐숙', tier: 'MASTER', position: '미드', soopId: 'nangnan' },
-            { name: '김유나', tier: 'MASTER', position: '서폿', soopId: 'yuna1024' },
-            { name: '포도네', tier: 'DIAMOND', position: '올라운더', soopId: 'podone1104' },
-            { name: '호아띠', tier: 'DIAMOND', position: '미드', soopId: 'y2s161451' },
-            { name: '곽춘식', tier: 'EMERALD', position: '올라운더', soopId: 'kwakchunshik' },
-            { name: '한아밍', tier: 'EMERALD', position: '서폿', soopId: 'kim91709' },
-            { name: '빅토리', tier: 'PLATINUM', position: '서폿', soopId: 'toryvac' },
-            { name: '문모모', tier: 'SILVER', position: '탑', soopId: 'doormomo' },
-        ];
-        // ============================================
-
-        // ============================================
         // 👥 버튜버 목록 (전체 신청자)
         // ============================================
         const ALL_STREAMERS = [
-            { name: '유키라', tier: 'IRON', position: '올라운더', soopId: 'kirababy2' },
+            { name: '우왁굳', tier: 'BRONZE', position: 'ALL', soopId: 'ecvhao' },
+            { name: '유키라', tier: 'IRON', position: 'ALL', soopId: 'kirababy2' },
             { name: '최또', tier: 'UNRANKED', position: '원딜', soopId: 'choiagain' },
             { name: '햇비', tier: 'IRON', position: '탑', soopId: 'htvv2i' },
             { name: '워비스', tier: 'GOLD', position: '탑', soopId: 'tguswk023' },
-            { name: '히어로레드', tier: 'SILVER', position: '올라운더', soopId: 'ttobeherored' },
+            { name: '히어로레드', tier: 'SILVER', position: 'ALL', soopId: 'ttobeherored' },
             { name: '호아띠', tier: 'DIAMOND', position: '미드', soopId: 'y2s161451' },
             { name: '나옹이빵', tier: 'PLATINUM', position: '서폿', soopId: 'naong2bbang' },
-            { name: '포도네', tier: 'DIAMOND', position: '올라운더', soopId: 'podone1104' },
+            { name: '포도네', tier: 'DIAMOND', position: 'ALL', soopId: 'podone1104' },
             { name: '쇼지니', tier: 'GOLD', position: '원딜', soopId: 'choujini' },
-            { name: '한결', tier: 'SILVER', position: '올라운더', soopId: 'kaksjak0730' },
+            { name: '한결', tier: 'SILVER', position: 'ALL', soopId: 'kaksjak0730' },
             { name: '깐숙', tier: 'MASTER', position: '미드', soopId: 'nangnan' },
             { name: '김킁지', tier: 'BRONZE', position: '정글', soopId: 'keunggee1004' },
             { name: '김땃쥐', tier: 'PLATINUM', position: '서폿', soopId: 'nmachuu060' },
@@ -588,7 +763,7 @@
             { name: '몽나', tier: 'BRONZE', position: '정글', soopId: 'pinktape8' },
             { name: '백야', tier: 'SILVER', position: '원딜', soopId: 'p0ppy628' },
             { name: '성여올', tier: 'BRONZE', position: '탑', soopId: 'tjdgk31470' },
-            { name: '시루냥', tier: 'SILVER', position: '올라운더', soopId: 'xirus2' },
+            { name: '시루냥', tier: 'SILVER', position: 'ALL', soopId: 'xirus2' },
             { name: '햄쩌구', tier: 'BRONZE', position: '서폿', soopId: 'zzeogoo' },
             { name: '채니', tier: 'GOLD', position: '원딜', soopId: 'k1baaa' },
             { name: '이릴', tier: 'SILVER', position: '탑', soopId: 'irrilll' },
@@ -602,7 +777,7 @@
             { name: '루디딕', tier: 'IRON', position: '탑', soopId: 'mnomno55' },
             { name: '와앙이', tier: 'BRONZE', position: '서폿', soopId: 'waanwaan' },
             { name: '파니', tier: 'BRONZE', position: '미드', soopId: 'baeksoon2' },
-            { name: '때찌', tier: 'UNRANKED', position: '올라운더', soopId: 'nwlsfl007' },
+            { name: '때찌', tier: 'UNRANKED', position: 'ALL', soopId: 'nwlsfl007' },
             { name: '심포', tier: 'GOLD', position: '서폿', soopId: 'popo1118' },
             { name: '보디가드불독', tier: 'SILVER', position: '서폿', soopId: 'bulgom77' },
             { name: '히키킹', tier: 'SILVER', position: '탑', soopId: 'hikiking' },
@@ -612,25 +787,30 @@
             { name: '도깨비루딘', tier: 'BRONZE', position: '서폿', soopId: 'xxxx922' },
             { name: '빅토리', tier: 'PLATINUM', position: '서폿', soopId: 'toryvac' },
             { name: '땡글땡글포포', tier: 'IRON', position: '서폿', soopId: 'roundpopo' },
-            { name: '곽춘식', tier: 'EMERALD', position: '올라운더', soopId: 'kwakchunshik' },
+            { name: '곽춘식', tier: 'EMERALD', position: 'ALL', soopId: 'kwakchunshik' },
             { name: '이덕수', tier: 'BRONZE', position: '탑', soopId: '2ducksoo' },
             { name: '한아밍', tier: 'EMERALD', position: '서폿', soopId: 'kim91709' },
-            { name: '피카온', tier: 'GOLD', position: '올라운더', soopId: 'bluesuncity' },
-            { name: '천양', tier: 'PLATINUM', position: '올라운더', soopId: '243000' },
+            { name: '피카온', tier: 'GOLD', position: 'ALL', soopId: 'bluesuncity' },
+            { name: '천양', tier: 'PLATINUM', position: 'ALL', soopId: '243000' },
             { name: '꿀빵지', tier: 'BRONZE', position: '서폿', soopId: '2059865' },
             { name: '투냥츠', tier: 'SILVER', position: '미드', soopId: 'toocats' },
             { name: '수셈이', tier: 'DIAMOND', position: '탑', soopId: 'soosemi432' },
             { name: '다뮤', tier: 'PLATINUM', position: '미드', soopId: 'not15987' },
             { name: '마익호', tier: 'SILVER', position: '탑', soopId: 'maickhoe' },
             { name: '주닝요1', tier: 'BRONZE', position: '탑', soopId: 'aza4986' },
-            { name: '미르', tier: 'UNRANKED', position: '올라운더', soopId: 'alice427' },
+            { name: '미르', tier: 'UNRANKED', position: 'ALL', soopId: 'alice427' },
             { name: '묭씨', tier: 'IRON', position: '탑', soopId: 'secymyong' },
             { name: '문모모', tier: 'SILVER', position: '탑', soopId: 'doormomo' },
             { name: '카푸', tier: 'IRON', position: '정글', soopId: 'kappuchan' },
             { name: '섄디한', tier: 'IRON', position: '원딜', soopId: 'shandyhan' },
             { name: '독고혜지', tier: 'IRON', position: '탑', soopId: 'dokkhye0000' },
         ];
-        // ============================================
+
+        // ID 부여
+        ALL_STREAMERS.forEach((s, i) => s.id = i);
+
+        // 오늘의 참가자
+        let todayRoster = [];
 
         // 팀 데이터
         let teams = {
@@ -659,33 +839,68 @@
             'MASTER': '마스터', 'GRANDMASTER': '그마', 'CHALLENGER': '챌린저', 'UNRANKED': '언랭'
         };
 
-        const TIER_VALUES = {
-            'UNRANKED': 0, 'IRON': 1, 'BRONZE': 2, 'SILVER': 3, 'GOLD': 4,
-            'PLATINUM': 5, 'EMERALD': 6, 'DIAMOND': 7, 'MASTER': 8, 'GRANDMASTER': 9, 'CHALLENGER': 10
-        };
-
-        // SOOP 프로필 이미지 URL 생성
         function getProfileImg(soopId) {
             if (!soopId) return '';
             const prefix = soopId.substring(0, 2);
             return `https://profile.img.sooplive.co.kr/LOGO/${prefix}/${soopId}/${soopId}.jpg`;
         }
 
-        // 기본 프로필 이미지 (로드 실패시)
         function handleImgError(img) {
             img.onerror = null;
-            img.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCBmaWxsPSIjMjcyNzJhIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjIwIiBmaWxsPSIjNTE1MTVhIi8+PHBhdGggZD0iTTIwIDkwYzAtMjUgMTMtNDAgMzAtNDBzMzAgMTUgMzAgNDB6IiBmaWxsPSIjNTE1MTVhIi8+PC9zdmc+';
+            img.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCBmaWxsPSIjMWMxYzI2IiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iMzUiIHI9IjE4IiBmaWxsPSIjM2EzYTRhIi8+PHBhdGggZD0iTTI1IDg1YzAtMjAgMTEtMzUgMjUtMzVzMjUgMTUgMjUgMzV6IiBmaWxsPSIjM2EzYTRhIi8+PC9zdmc+';
         }
 
-        // ID 부여
-        TODAY_ROSTER.forEach((s, i) => s.id = i);
-        ALL_STREAMERS.forEach((s, i) => s.id = i + 1000);
+        // 검색 기능
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.trim().toLowerCase();
+            
+            if (query.length === 0) {
+                searchResults.classList.remove('active');
+                return;
+            }
+
+            const filtered = ALL_STREAMERS.filter(s => 
+                s.name.toLowerCase().includes(query)
+            );
+
+            if (filtered.length === 0) {
+                searchResults.innerHTML = '<div class="search-no-result">검색 결과가 없습니다</div>';
+            } else {
+                searchResults.innerHTML = filtered.map(s => `
+                    <div class="search-result-item ${todayRoster.includes(s.id) ? 'in-roster' : ''}" onclick="addToRoster(${s.id})">
+                        <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="handleImgError(this)" alt="">
+                        <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="">
+                        <div class="info">
+                            <div class="name">${s.name}</div>
+                            <div class="detail">${TIER_NAMES[s.tier]} · ${s.position}</div>
+                        </div>
+                        <span class="add-text">${todayRoster.includes(s.id) ? '추가됨' : '+ 추가'}</span>
+                    </div>
+                `).join('');
+            }
+
+            searchResults.classList.add('active');
+        });
+
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.trim().length > 0) {
+                searchResults.classList.add('active');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                searchResults.classList.remove('active');
+            }
+        });
 
         // 드래그 앤 드롭
         let draggedId = null;
         let draggedFromSlot = null;
 
-        // 팀에 배치된 ID 목록
         function getAssignedIds() {
             const ids = [];
             ['blue', 'red'].forEach(team => {
@@ -696,43 +911,70 @@
             return ids;
         }
 
-        // 등록 명단 렌더링
+        function addToRoster(id) {
+            if (!todayRoster.includes(id)) {
+                todayRoster.push(id);
+                searchInput.value = '';
+                searchResults.classList.remove('active');
+                renderAll();
+            }
+        }
+
+        function removeFromRoster(id) {
+            todayRoster = todayRoster.filter(rid => rid !== id);
+            ['blue', 'red'].forEach(team => {
+                Object.keys(teams[team]).forEach(pos => {
+                    if (teams[team][pos] === id) teams[team][pos] = null;
+                });
+            });
+            renderAll();
+        }
+
         function renderRoster() {
             const grid = document.getElementById('roster-grid');
             const assignedIds = getAssignedIds();
-            document.getElementById('roster-count').textContent = TODAY_ROSTER.length;
+            document.getElementById('roster-count').textContent = todayRoster.length;
 
-            grid.innerHTML = TODAY_ROSTER.map(s => `
-                <div class="roster-card ${assignedIds.includes(s.id) ? 'in-team' : ''}" 
-                     draggable="true" 
-                     data-id="${s.id}"
-                     ondragstart="handleDragStart(event)"
-                     ondragend="handleDragEnd(event)">
-                    <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="handleImgError(this)" alt="">
-                    <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
-                    <div class="info">
-                        <div class="name">${s.name}</div>
-                        <div class="detail">
-                            <span>${TIER_NAMES[s.tier]}</span>
-                            <span class="position-badge">${s.position}</span>
+            if (todayRoster.length === 0) {
+                grid.innerHTML = '<div class="roster-empty">검색창에서 버튜버를 검색하여 추가해주세요</div>';
+                return;
+            }
+
+            grid.innerHTML = todayRoster.map(id => {
+                const s = ALL_STREAMERS.find(st => st.id === id);
+                if (!s) return '';
+                return `
+                    <div class="roster-card ${assignedIds.includes(s.id) ? 'in-team' : ''}" 
+                         draggable="true" 
+                         data-id="${s.id}"
+                         ondragstart="handleDragStart(event)"
+                         ondragend="handleDragEnd(event)">
+                        <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="handleImgError(this)" alt="">
+                        <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="">
+                        <div class="info">
+                            <div class="name">${s.name}</div>
+                            <div class="detail">
+                                <span>${TIER_NAMES[s.tier]}</span>
+                                <span class="position-badge">${s.position}</span>
+                            </div>
                         </div>
+                        <button class="remove-btn" onclick="event.stopPropagation(); removeFromRoster(${s.id})">✕</button>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        // 버튜버 목록 렌더링
         function renderStreamers() {
             const list = document.getElementById('streamer-list');
             document.getElementById('streamer-count').textContent = ALL_STREAMERS.length;
 
             list.innerHTML = ALL_STREAMERS.map(s => `
-                <div class="streamer-card">
+                <div class="streamer-card ${todayRoster.includes(s.id) ? 'in-roster' : ''}">
                     <img class="profile-img" src="${getProfileImg(s.soopId)}" onerror="handleImgError(this)" alt="">
                     <div class="info">
                         <div class="name">${s.name}</div>
                         <div class="tier-row">
-                            <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
+                            <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="">
                             <span class="tier-name">${TIER_NAMES[s.tier]}</span>
                         </div>
                         <span class="position-badge">${s.position}</span>
@@ -741,13 +983,12 @@
             `).join('');
         }
 
-        // 팀 슬롯 렌더링
         function renderTeams() {
             ['blue', 'red'].forEach(team => {
                 Object.keys(teams[team]).forEach(position => {
                     const slot = document.querySelector(`.team-slot[data-team="${team}"][data-position="${position}"]`);
                     const streamerId = teams[team][position];
-                    const streamer = TODAY_ROSTER.find(s => s.id === streamerId);
+                    const streamer = ALL_STREAMERS.find(s => s.id === streamerId);
 
                     if (streamer) {
                         slot.classList.add('filled');
@@ -755,10 +996,10 @@
                         slot.innerHTML = `
                             <div class="slot-position">${position}</div>
                             <img class="slot-profile" src="${getProfileImg(streamer.soopId)}" onerror="handleImgError(this)" alt="">
-                            <img class="slot-tier" src="${TIER_IMAGES[streamer.tier]}" alt="${streamer.tier}">
+                            <img class="slot-tier" src="${TIER_IMAGES[streamer.tier]}" alt="">
                             <div class="slot-info">
                                 <div class="slot-name">${streamer.name}</div>
-                                <div class="slot-detail">${TIER_NAMES[streamer.tier]} • 주 ${streamer.position}</div>
+                                <div class="slot-detail">${TIER_NAMES[streamer.tier]} · ${streamer.position}</div>
                             </div>
                             <button class="slot-remove" onclick="event.stopPropagation(); removeFromSlot('${team}', '${position}')">✕</button>
                         `;
@@ -767,51 +1008,29 @@
                         slot.setAttribute('draggable', 'false');
                         slot.innerHTML = `
                             <div class="slot-position">${position}</div>
-                            <div class="slot-info"><div class="slot-name">드래그하여 추가</div></div>
+                            <div class="slot-info"><div class="slot-name" style="color:var(--text-muted);font-weight:400;">드래그하여 배치</div></div>
                         `;
                     }
                 });
-
-                updateTeamAvg(team);
             });
             
             setupSlotDragEvents();
         }
 
-        // 팀 평균 티어
-        function updateTeamAvg(team) {
-            const members = Object.values(teams[team])
-                .filter(id => id !== null)
-                .map(id => TODAY_ROSTER.find(s => s.id === id))
-                .filter(s => s);
-
-            if (members.length === 0) {
-                document.getElementById(`${team}-avg`).textContent = '평균: -';
-                return;
-            }
-
-            const total = members.reduce((sum, s) => sum + TIER_VALUES[s.tier], 0);
-            const avg = Math.round(total / members.length);
-            const avgTier = Object.entries(TIER_VALUES).find(([k, v]) => v === avg)?.[0] || 'UNRANKED';
-            
-            document.getElementById(`${team}-avg`).textContent = `평균: ${TIER_NAMES[avgTier]} (${members.length}명)`;
-        }
-
         function handleDragStart(e) {
-            draggedId = parseInt(e.target.dataset.id);
+            const card = e.currentTarget;
+            draggedId = parseInt(card.dataset.id);
             draggedFromSlot = null;
-            e.target.classList.add('dragging');
+            card.classList.add('dragging');
             e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', draggedId);
         }
 
         function handleDragEnd(e) {
-            e.target.classList.remove('dragging');
-            document.querySelectorAll('.team-slot').forEach(slot => {
-                slot.classList.remove('drag-over');
-            });
+            e.currentTarget.classList.remove('dragging');
+            document.querySelectorAll('.team-slot').forEach(slot => slot.classList.remove('drag-over'));
         }
 
-        // 슬롯 드래그 이벤트 설정
         function setupSlotDragEvents() {
             document.querySelectorAll('.team-slot').forEach(slot => {
                 slot.ondragstart = (e) => {
@@ -825,28 +1044,21 @@
                     }
                 };
 
-                slot.ondragend = (e) => {
+                slot.ondragend = () => {
                     slot.classList.remove('dragging');
-                    document.querySelectorAll('.team-slot').forEach(s => {
-                        s.classList.remove('drag-over');
-                    });
+                    document.querySelectorAll('.team-slot').forEach(s => s.classList.remove('drag-over'));
                 };
 
                 slot.ondragover = (e) => {
                     e.preventDefault();
-                    if (!slot.classList.contains('dragging')) {
-                        slot.classList.add('drag-over');
-                    }
+                    if (!slot.classList.contains('dragging')) slot.classList.add('drag-over');
                 };
 
-                slot.ondragleave = () => {
-                    slot.classList.remove('drag-over');
-                };
+                slot.ondragleave = () => slot.classList.remove('drag-over');
 
                 slot.ondrop = (e) => {
                     e.preventDefault();
                     slot.classList.remove('drag-over');
-                    
                     if (draggedId === null) return;
                     
                     const targetTeam = slot.dataset.team;
@@ -857,45 +1069,39 @@
                     } else {
                         ['blue', 'red'].forEach(t => {
                             Object.keys(teams[t]).forEach(p => {
-                                if (teams[t][p] === draggedId) {
-                                    teams[t][p] = null;
-                                }
+                                if (teams[t][p] === draggedId) teams[t][p] = null;
                             });
                         });
                     }
                     
                     teams[targetTeam][targetPosition] = draggedId;
-                    
                     draggedId = null;
                     draggedFromSlot = null;
-                    
-                    renderTeams();
-                    renderRoster();
+                    renderAll();
                 };
             });
         }
 
-        // 슬롯에서 제거
         function removeFromSlot(team, position) {
             teams[team][position] = null;
-            renderTeams();
-            renderRoster();
+            renderAll();
         }
 
-        // 팀 초기화
         function resetTeams() {
             teams = {
                 blue: { '탑': null, '정글': null, '미드': null, '원딜': null, '서폿': null },
                 red: { '탑': null, '정글': null, '미드': null, '원딜': null, '서폿': null }
             };
-            renderTeams();
-            renderRoster();
+            renderAll();
         }
 
-        // 초기 렌더링
-        renderRoster();
-        renderTeams();
-        renderStreamers();
+        function renderAll() {
+            renderRoster();
+            renderTeams();
+            renderStreamers();
+        }
+
+        renderAll();
     </script>
 </body>
 </html>
