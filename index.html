@@ -22,26 +22,18 @@
             --border: #27272a;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Noto Sans KR', sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         .bg-effect {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
             z-index: 0;
             background: 
@@ -53,9 +45,6 @@
             position: relative;
             z-index: 10;
             padding: 20px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             border-bottom: 1px solid var(--border);
             background: rgba(10, 10, 15, 0.8);
             backdrop-filter: blur(10px);
@@ -68,45 +57,40 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -1px;
         }
 
         main {
             position: relative;
             z-index: 10;
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 40px 20px;
         }
 
         .hero {
             text-align: center;
-            padding: 40px 20px;
+            padding: 30px 20px;
             margin-bottom: 30px;
         }
 
         .hero h1 {
             font-family: 'Black Han Sans', sans-serif;
-            font-size: 36px;
+            font-size: 32px;
             margin-bottom: 12px;
             background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            line-height: 1.3;
         }
 
-        .hero p {
-            color: var(--text-secondary);
-            font-size: 16px;
-        }
+        .hero p { color: var(--text-secondary); font-size: 15px; }
 
         .section-title {
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 24px;
-            font-size: 20px;
+            margin-bottom: 20px;
+            font-size: 18px;
             font-weight: 700;
         }
 
@@ -118,75 +102,38 @@
             border-radius: 2px;
         }
 
-        /* 스트리머 그리드 */
-        .streamer-grid {
+        /* 스트리머 목록 */
+        .streamer-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
         .streamer-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .streamer-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-            opacity: 0;
-            transition: opacity 0.3s;
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
         }
 
         .streamer-card:hover {
             background: var(--bg-hover);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .streamer-card:hover::before { opacity: 1; }
-
-        .streamer-card.selected {
-            border-color: var(--accent-blue);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+        .streamer-card.in-team {
+            opacity: 0.5;
+            border-color: var(--accent-green);
         }
 
-        .streamer-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 16px;
-        }
-
-        .streamer-avatar {
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 20px;
+        .tier-icon {
+            width: 36px;
+            height: 36px;
             flex-shrink: 0;
-            overflow: hidden;
-        }
-
-        .streamer-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .streamer-info {
@@ -194,167 +141,111 @@
             min-width: 0;
         }
 
-        .streamer-info h3 {
-            font-size: 18px;
+        .streamer-name {
             font-weight: 700;
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .streamer-info .summoner-name {
-            font-size: 13px;
-            color: var(--text-muted);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .rank-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 12px;
-            background: var(--bg-secondary);
-            border-radius: 8px;
             font-size: 14px;
-            font-weight: 600;
+            margin-bottom: 3px;
         }
 
-        .streamer-stats {
-            display: flex;
-            gap: 20px;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--border);
-        }
-
-        .stat { text-align: center; }
-        .stat-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        .stat-label {
+        .streamer-detail {
             font-size: 11px;
             color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            display: flex;
+            gap: 6px;
+            align-items: center;
         }
 
-        /* 팀 배치 섹션 */
+        .position-badge {
+            padding: 2px 6px;
+            background: var(--accent-blue);
+            border-radius: 4px;
+            font-size: 10px;
+            color: white;
+        }
+
+        /* 팀 배치 */
         .team-builder {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 50px;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 30px;
         }
 
         .teams-container {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
-            gap: 30px;
-            align-items: start;
+            gap: 20px;
         }
 
         .team {
             background: var(--bg-secondary);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 16px;
         }
 
         .team-header {
             text-align: center;
-            padding-bottom: 16px;
-            margin-bottom: 16px;
+            padding-bottom: 12px;
+            margin-bottom: 12px;
             border-bottom: 1px solid var(--border);
         }
 
-        .team-header h3 {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-
+        .team-header h3 { font-size: 16px; margin-bottom: 4px; }
         .team-header.blue h3 { color: var(--accent-blue); }
         .team-header.red h3 { color: var(--accent-red); }
+        .team-avg { font-size: 12px; color: var(--text-muted); }
 
         .team-slots {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
 
         .team-slot {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 12px;
+            gap: 10px;
+            padding: 10px;
             background: var(--bg-card);
             border: 2px dashed var(--border);
-            border-radius: 10px;
+            border-radius: 8px;
+            min-height: 56px;
             cursor: pointer;
             transition: all 0.2s;
-            min-height: 64px;
         }
 
         .team-slot:hover {
             border-color: var(--accent-blue);
-            background: var(--bg-hover);
         }
 
         .team-slot.filled {
             border-style: solid;
-            border-color: var(--border);
         }
 
         .slot-position {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             background: var(--bg-secondary);
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--text-muted);
             flex-shrink: 0;
         }
 
-        .slot-position img {
-            width: 24px;
-            height: 24px;
-        }
-
-        .slot-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
+        .slot-tier {
+            width: 32px;
+            height: 32px;
             flex-shrink: 0;
         }
 
-        .slot-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .slot-info {
-            flex: 1;
-        }
-
-        .slot-name {
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .slot-rank {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
+        .slot-info { flex: 1; }
+        .slot-name { font-weight: 600; font-size: 13px; }
+        .slot-detail { font-size: 11px; color: var(--text-muted); }
 
         .slot-remove {
             width: 24px;
@@ -364,53 +255,60 @@
             border-radius: 4px;
             color: white;
             cursor: pointer;
-            font-size: 14px;
-            display: none;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.2s;
         }
 
-        .team-slot.filled:hover .slot-remove {
-            display: block;
-        }
+        .team-slot.filled:hover .slot-remove { opacity: 1; }
 
         .vs-badge {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-red));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-red));
-            border-radius: 50%;
             font-family: 'Black Han Sans', sans-serif;
-            font-size: 24px;
+            font-size: 18px;
             align-self: center;
         }
 
-        .reset-btn {
-            display: block;
-            margin: 20px auto 0;
-            padding: 12px 30px;
-            background: transparent;
-            border: 1px solid var(--border);
+        .team-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
             border-radius: 8px;
-            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
             font-family: 'Noto Sans KR', sans-serif;
             transition: all 0.2s;
         }
 
-        .reset-btn:hover {
-            border-color: var(--accent-red);
-            color: var(--accent-red);
+        .btn-secondary {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
         }
 
-        /* 선택 모달 */
+        .btn-secondary:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+
+        /* 모달 */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -431,15 +329,12 @@
             border-radius: 16px;
             padding: 24px;
             width: 90%;
-            max-width: 500px;
-            max-height: 80vh;
+            max-width: 400px;
+            max-height: 70vh;
             overflow-y: auto;
         }
 
-        .modal h3 {
-            margin-bottom: 16px;
-            font-size: 18px;
-        }
+        .modal h3 { margin-bottom: 16px; font-size: 16px; }
 
         .modal-streamer-list {
             display: flex;
@@ -450,38 +345,18 @@
         .modal-streamer {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             padding: 12px;
             background: var(--bg-secondary);
-            border-radius: 10px;
+            border-radius: 8px;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .modal-streamer:hover {
-            background: var(--bg-hover);
-        }
-
-        .modal-streamer.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .modal-streamer-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .modal-streamer-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .modal-streamer:hover { background: var(--bg-hover); }
+        .modal-streamer.disabled { opacity: 0.4; cursor: not-allowed; }
 
         .modal-close {
-            display: block;
             width: 100%;
             margin-top: 16px;
             padding: 12px;
@@ -493,6 +368,12 @@
             font-family: 'Noto Sans KR', sans-serif;
         }
 
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+        }
+
         footer {
             position: relative;
             z-index: 10;
@@ -501,36 +382,17 @@
             color: var(--text-muted);
             font-size: 13px;
             border-top: 1px solid var(--border);
-            margin-top: 60px;
-        }
-
-        footer a {
-            color: var(--accent-blue);
-            text-decoration: none;
         }
 
         @media (max-width: 900px) {
-            .teams-container {
-                grid-template-columns: 1fr;
-            }
-            .vs-badge {
-                margin: 0 auto;
-            }
+            .teams-container { grid-template-columns: 1fr; }
+            .vs-badge { margin: 10px auto; }
         }
 
-        @media (max-width: 768px) {
-            header {
-                padding: 15px 20px;
-            }
-            .logo {
-                font-size: 18px;
-            }
-            .hero h1 {
-                font-size: 24px;
-            }
-            .streamer-grid {
-                grid-template-columns: 1fr;
-            }
+        @media (max-width: 600px) {
+            header { padding: 15px 20px; }
+            .hero h1 { font-size: 24px; }
+            .streamer-list { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -543,8 +405,8 @@
 
     <main>
         <section class="hero">
-            <h1>올 랜덤 버튜버 억지 밸런스<br>롤 내전 참가자 전적</h1>
-            <p>스트리머를 클릭하여 팀에 배치해보세요</p>
+            <h1>올 랜덤 버튜버 억지 밸런스<br>롤 내전</h1>
+            <p>오늘의 참가 스트리머를 확인하고 팀을 배치해보세요</p>
         </section>
 
         <!-- 팀 배치 -->
@@ -554,25 +416,26 @@
                 <div class="team">
                     <div class="team-header blue">
                         <h3>🔵 블루팀</h3>
+                        <div class="team-avg" id="blue-avg">평균: -</div>
                     </div>
                     <div class="team-slots" id="blue-team">
-                        <div class="team-slot" data-position="탑" data-team="blue" onclick="openModal('blue', '탑')">
+                        <div class="team-slot" data-team="blue" data-position="탑" onclick="openModal('blue', '탑')">
                             <div class="slot-position">탑</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-position="정글" data-team="blue" onclick="openModal('blue', '정글')">
+                        <div class="team-slot" data-team="blue" data-position="정글" onclick="openModal('blue', '정글')">
                             <div class="slot-position">정글</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-position="미드" data-team="blue" onclick="openModal('blue', '미드')">
+                        <div class="team-slot" data-team="blue" data-position="미드" onclick="openModal('blue', '미드')">
                             <div class="slot-position">미드</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-position="원딜" data-team="blue" onclick="openModal('blue', '원딜')">
+                        <div class="team-slot" data-team="blue" data-position="원딜" onclick="openModal('blue', '원딜')">
                             <div class="slot-position">원딜</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-position="서폿" data-team="blue" onclick="openModal('blue', '서폿')">
+                        <div class="team-slot" data-team="blue" data-position="서폿" onclick="openModal('blue', '서폿')">
                             <div class="slot-position">서폿</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
@@ -584,50 +447,51 @@
                 <div class="team">
                     <div class="team-header red">
                         <h3>🔴 레드팀</h3>
+                        <div class="team-avg" id="red-avg">평균: -</div>
                     </div>
                     <div class="team-slots" id="red-team">
-                        <div class="team-slot" data-position="탑" data-team="red" onclick="openModal('red', '탑')">
+                        <div class="team-slot" data-team="red" data-position="탑" onclick="openModal('red', '탑')">
                             <div class="slot-position">탑</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-position="정글" data-team="red" onclick="openModal('red', '정글')">
+                        <div class="team-slot" data-team="red" data-position="정글" onclick="openModal('red', '정글')">
                             <div class="slot-position">정글</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-position="미드" data-team="red" onclick="openModal('red', '미드')">
+                        <div class="team-slot" data-team="red" data-position="미드" onclick="openModal('red', '미드')">
                             <div class="slot-position">미드</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-position="원딜" data-team="red" onclick="openModal('red', '원딜')">
+                        <div class="team-slot" data-team="red" data-position="원딜" onclick="openModal('red', '원딜')">
                             <div class="slot-position">원딜</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
-                        <div class="team-slot" data-position="서폿" data-team="red" onclick="openModal('red', '서폿')">
+                        <div class="team-slot" data-team="red" data-position="서폿" onclick="openModal('red', '서폿')">
                             <div class="slot-position">서폿</div>
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <button class="reset-btn" onclick="resetTeams()">🔄 팀 초기화</button>
+
+            <div class="team-actions">
+                <button class="btn btn-secondary" onclick="resetTeams()">🔄 팀 초기화</button>
+            </div>
         </div>
 
-        <!-- 스트리머 목록 -->
-        <h2 class="section-title">참가자 목록 (<span id="streamer-count">0</span>명)</h2>
-        <div id="streamer-grid" class="streamer-grid"></div>
+        <!-- 등록된 스트리머 목록 -->
+        <h2 class="section-title">👥 오늘의 참가자 (<span id="streamer-count">0</span>명)</h2>
+        <div id="streamer-list" class="streamer-list"></div>
     </main>
 
     <footer>
         <p>올 랜덤 버튜버 억지 밸런스 롤 내전 비공식 팬사이트</p>
-        <p style="margin-top: 8px;">
-            데이터 출처: <a href="https://developer.riotgames.com" target="_blank">Riot Games API</a>
-        </p>
     </footer>
 
     <!-- 스트리머 선택 모달 -->
     <div id="modal" class="modal-overlay" onclick="closeModal(event)">
         <div class="modal" onclick="event.stopPropagation()">
-            <h3>🎮 <span id="modal-position"></span> 선택</h3>
+            <h3>🎮 <span id="modal-position">탑</span> 선택</h3>
             <div id="modal-list" class="modal-streamer-list"></div>
             <button class="modal-close" onclick="closeModal()">닫기</button>
         </div>
@@ -635,37 +499,101 @@
 
     <script>
         // ============================================
-        // 🎮 스트리머 목록 - 여기서 추가/수정하세요!
+        // 🎮 오늘의 참가 스트리머 - 여기서 수정하세요!
         // ============================================
         // 
-        // 📝 추가 방법:
-        // { 
-        //   name: '스트리머 이름',           // 표시될 이름
-        //   riotId: '게임닉네임#태그',       // Riot ID
-        //   profileImage: '이미지URL',       // 프로필 이미지 (선택, 없으면 이니셜 표시)
-        //   rank: '골드 1',                  // 랭크 (수동 입력)
-        //   winRate: '50%',                  // 승률 (수동 입력)
-        //   kda: '2.5',                      // KDA (수동 입력)
-        //   games: '100'                     // 게임 수 (수동 입력)
-        // }
+        // 📝 형식:
+        // { name: '닉네임', tier: '티어', position: '주포지션' }
+        //
+        // 티어 옵션: UNRANKED, IRON, BRONZE, SILVER, GOLD, PLATINUM, EMERALD, DIAMOND, MASTER, GRANDMASTER, CHALLENGER
+        // 포지션 옵션: 탑, 정글, 미드, 원딜, 서폿, 올라운더
         //
         // ============================================
         const STREAMERS = [
-            // 예시 - 실제 스트리머 정보로 교체하세요!
-            // {
-            //     name: '스트리머이름',
-            //     riotId: '게임닉네임#KR1',
-            //     profileImage: 'https://프로필이미지URL',
-            //     rank: '골드 1',
-            //     winRate: '52%',
-            //     kda: '3.2',
-            //     games: '156'
-            // },
+            // ===== 오늘 뽑힌 9명 + 우왁굳 =====
+            // { name: '우왁굳', tier: 'BRONZE', position: '올라운더' },
+            // { name: '스트리머1', tier: 'SILVER', position: '탑' },
+            // ...
+            
+            // ===== 신청자 전체 목록 (참고용) =====
+            // 우왁굳이 9명 뽑으면 위에 추가하고, 아래는 주석처리 또는 삭제
+            
+            { name: '유키라', tier: 'IRON', position: '올라운더' },
+            { name: '최또', tier: 'UNRANKED', position: '원딜' },
+            { name: '햇비', tier: 'IRON', position: '탑' },
+            { name: '워비스', tier: 'GOLD', position: '탑' },
+            { name: '히어로레드', tier: 'SILVER', position: '올라운더' },
+            { name: '호아띠', tier: 'DIAMOND', position: '미드' },
+            { name: '나옹이빵', tier: 'PLATINUM', position: '서폿' },
+            { name: '포도네', tier: 'DIAMOND', position: '올라운더' },
+            { name: '쇼지니', tier: 'GOLD', position: '원딜' },
+            { name: '한결', tier: 'SILVER', position: '올라운더' },
+            { name: '깐숙', tier: 'MASTER', position: '미드' },
+            { name: '김킁지', tier: 'BRONZE', position: '정글' },
+            { name: '김땃쥐', tier: 'PLATINUM', position: '서폿' },
+            { name: '쥬멩이', tier: 'SILVER', position: '서폿' },
+            { name: '냥쏘', tier: 'SILVER', position: '서폿' },
+            { name: '비즈니스킴', tier: 'IRON', position: '서폿' },
+            { name: '구월이', tier: 'BRONZE', position: '서폿' },
+            { name: '어쩜냥이', tier: 'BRONZE', position: '미드' },
+            { name: '편덕희', tier: 'GOLD', position: '서폿' },
+            { name: '복순덕', tier: 'SILVER', position: '정글' },
+            { name: '푸마고치', tier: 'IRON', position: '정글' },
+            { name: '하밍', tier: 'BRONZE', position: '서폿' },
+            { name: '해파린', tier: 'GOLD', position: '서폿' },
+            { name: '새마요', tier: 'BRONZE', position: '탑' },
+            { name: '뇽이', tier: 'BRONZE', position: '탑' },
+            { name: '바냐', tier: 'BRONZE', position: '미드' },
+            { name: '도페', tier: 'GOLD', position: '서폿' },
+            { name: '몽나', tier: 'BRONZE', position: '정글' },
+            { name: '백야', tier: 'SILVER', position: '원딜' },
+            { name: '성여올', tier: 'BRONZE', position: '탑' },
+            { name: '시루냥', tier: 'SILVER', position: '올라운더' },
+            { name: '햄쩌구', tier: 'BRONZE', position: '서폿' },
+            { name: '채니', tier: 'GOLD', position: '원딜' },
+            { name: '이릴', tier: 'SILVER', position: '탑' },
+            { name: '김유나', tier: 'MASTER', position: '서폿' },
+            { name: '뚜닝', tier: 'GOLD', position: '서폿' },
+            { name: '기찬하', tier: 'BRONZE', position: '미드' },
+            { name: '떵규', tier: 'SILVER', position: '정글' },
+            { name: '공도리', tier: 'GOLD', position: '탑' },
+            { name: '재닌', tier: 'UNRANKED', position: '탑' },
+            { name: '호미밍', tier: 'SILVER', position: '정글' },
+            { name: '루디딕', tier: 'IRON', position: '탑' },
+            { name: '와앙이', tier: 'BRONZE', position: '서폿' },
+            { name: '파니', tier: 'BRONZE', position: '미드' },
+            { name: '때찌', tier: 'UNRANKED', position: '올라운더' },
+            { name: '심포', tier: 'GOLD', position: '서폿' },
+            { name: '보디가드불독', tier: 'SILVER', position: '서폿' },
+            { name: '히키킹', tier: 'SILVER', position: '탑' },
+            { name: '코렛트', tier: 'SILVER', position: '정글' },
+            { name: '윤이제', tier: 'BRONZE', position: '원딜' },
+            { name: '임하밍', tier: 'SILVER', position: '원딜' },
+            { name: '도깨비루딘', tier: 'BRONZE', position: '서폿' },
+            { name: '빅토리', tier: 'PLATINUM', position: '서폿' },
+            { name: '땡글땡글포포', tier: 'IRON', position: '서폿' },
+            { name: '곽춘식', tier: 'EMERALD', position: '올라운더' },
+            { name: '이덕수', tier: 'BRONZE', position: '탑' },
+            { name: '한아밍', tier: 'EMERALD', position: '서폿' },
+            { name: '피카온', tier: 'GOLD', position: '올라운더' },
+            { name: '천양', tier: 'PLATINUM', position: '올라운더' },
+            { name: '꿀빵지', tier: 'BRONZE', position: '서폿' },
+            { name: '투냥츠', tier: 'SILVER', position: '미드' },
+            { name: '수셈이', tier: 'DIAMOND', position: '탑' },
+            { name: '다뮤', tier: 'PLATINUM', position: '미드' },
+            { name: '마익호', tier: 'SILVER', position: '탑' },
+            { name: '주닝요1', tier: 'BRONZE', position: '탑' },
+            { name: '미르', tier: 'UNRANKED', position: '올라운더' },
+            { name: '묭씨', tier: 'IRON', position: '탑' },
+            { name: '문모모', tier: 'SILVER', position: '탑' },
+            { name: '카푸', tier: 'IRON', position: '정글' },
+            { name: '섄디한', tier: 'IRON', position: '원딜' },
+            { name: '독고혜지', tier: 'IRON', position: '탑' },
         ];
         // ============================================
 
-        // 팀 배치 상태
-        let teamAssignments = {
+        // 팀 데이터
+        let teams = {
             blue: { '탑': null, '정글': null, '미드': null, '원딜': null, '서폿': null },
             red: { '탑': null, '정글': null, '미드': null, '원딜': null, '서폿': null }
         };
@@ -673,152 +601,89 @@
         let currentTeam = null;
         let currentPosition = null;
 
-        // 스트리머 카드 렌더링
+        // 티어 이미지
+        const TIER_IMAGES = {
+            'IRON': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/iron.png',
+            'BRONZE': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/bronze.png',
+            'SILVER': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/silver.png',
+            'GOLD': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/gold.png',
+            'PLATINUM': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/platinum.png',
+            'EMERALD': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/emerald.png',
+            'DIAMOND': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/diamond.png',
+            'MASTER': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/master.png',
+            'GRANDMASTER': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/grandmaster.png',
+            'CHALLENGER': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/challenger.png',
+            'UNRANKED': 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/unranked.png'
+        };
+
+        const TIER_NAMES = {
+            'IRON': '아이언', 'BRONZE': '브론즈', 'SILVER': '실버', 'GOLD': '골드',
+            'PLATINUM': '플래티넘', 'EMERALD': '에메랄드', 'DIAMOND': '다이아몬드',
+            'MASTER': '마스터', 'GRANDMASTER': '그마', 'CHALLENGER': '챌린저', 'UNRANKED': '언랭'
+        };
+
+        const TIER_VALUES = {
+            'UNRANKED': 0, 'IRON': 1, 'BRONZE': 2, 'SILVER': 3, 'GOLD': 4,
+            'PLATINUM': 5, 'EMERALD': 6, 'DIAMOND': 7, 'MASTER': 8, 'GRANDMASTER': 9, 'CHALLENGER': 10
+        };
+
+        // ID 부여
+        STREAMERS.forEach((s, i) => s.id = i);
+
+        // 팀에 배치된 스트리머 ID 목록
+        function getAssignedIds() {
+            const ids = [];
+            ['blue', 'red'].forEach(team => {
+                Object.values(teams[team]).forEach(id => {
+                    if (id !== null) ids.push(id);
+                });
+            });
+            return ids;
+        }
+
+        // 스트리머 목록 렌더링
         function renderStreamers() {
-            const grid = document.getElementById('streamer-grid');
-            const countEl = document.getElementById('streamer-count');
-            
-            countEl.textContent = STREAMERS.length;
+            const list = document.getElementById('streamer-list');
+            const count = document.getElementById('streamer-count');
+            const assignedIds = getAssignedIds();
+
+            count.textContent = STREAMERS.length;
 
             if (STREAMERS.length === 0) {
-                grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text-muted);">
-                        <p style="font-size: 18px; margin-bottom: 10px;">등록된 참가자가 없습니다</p>
-                        <p style="font-size: 14px;">코드의 STREAMERS 배열에 참가자를 추가해주세요</p>
-                    </div>
-                `;
+                list.innerHTML = '<div class="empty-state">등록된 스트리머가 없습니다</div>';
                 return;
             }
 
-            grid.innerHTML = STREAMERS.map((s, index) => `
-                <div class="streamer-card" data-index="${index}">
-                    <div class="streamer-header">
-                        <div class="streamer-avatar">
-                            ${s.profileImage 
-                                ? `<img src="${s.profileImage}" alt="${s.name}" onerror="this.parentElement.innerHTML='${s.name.charAt(0)}'">` 
-                                : s.name.charAt(0)}
-                        </div>
-                        <div class="streamer-info">
-                            <h3>${s.name}</h3>
-                            <span class="summoner-name">${s.riotId}</span>
-                        </div>
-                    </div>
-                    <div class="rank-badge">
-                        ${getRankEmoji(s.rank)} ${s.rank || '랭크 정보 없음'}
-                    </div>
-                    <div class="streamer-stats">
-                        <div class="stat">
-                            <div class="stat-value">${s.games || '-'}</div>
-                            <div class="stat-label">게임수</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">${s.winRate || '-'}</div>
-                            <div class="stat-label">승률</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">${s.kda || '-'}</div>
-                            <div class="stat-label">KDA</div>
+            list.innerHTML = STREAMERS.map(s => `
+                <div class="streamer-card ${assignedIds.includes(s.id) ? 'in-team' : ''}">
+                    <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}">
+                    <div class="streamer-info">
+                        <div class="streamer-name">${s.name}</div>
+                        <div class="streamer-detail">
+                            <span>${TIER_NAMES[s.tier]}</span>
+                            <span class="position-badge">${s.position}</span>
                         </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        // 랭크 이모지
-        function getRankEmoji(rank) {
-            if (!rank) return '❓';
-            const r = rank.toLowerCase();
-            if (r.includes('challenger') || r.includes('챌린저')) return '👑';
-            if (r.includes('grandmaster') || r.includes('그랜드마스터')) return '🔴';
-            if (r.includes('master') || r.includes('마스터')) return '💜';
-            if (r.includes('diamond') || r.includes('다이아')) return '💎';
-            if (r.includes('emerald') || r.includes('에메랄드')) return '💚';
-            if (r.includes('platinum') || r.includes('플래티넘') || r.includes('플레')) return '💠';
-            if (r.includes('gold') || r.includes('골드')) return '🥇';
-            if (r.includes('silver') || r.includes('실버')) return '🥈';
-            if (r.includes('bronze') || r.includes('브론즈')) return '🥉';
-            if (r.includes('iron') || r.includes('아이언')) return '⚙️';
-            return '❓';
-        }
-
-        // 모달 열기
-        function openModal(team, position) {
-            currentTeam = team;
-            currentPosition = position;
-            
-            document.getElementById('modal-position').textContent = position;
-            
-            const assignedIds = getAssignedStreamerIds();
-            const currentSlotStreamer = teamAssignments[team][position];
-            
-            const listHtml = STREAMERS.map((s, index) => {
-                const isAssigned = assignedIds.includes(index) && currentSlotStreamer !== index;
-                return `
-                    <div class="modal-streamer ${isAssigned ? 'disabled' : ''}" 
-                         onclick="${isAssigned ? '' : `selectStreamer(${index})`}">
-                        <div class="modal-streamer-avatar">
-                            ${s.profileImage 
-                                ? `<img src="${s.profileImage}" alt="${s.name}" onerror="this.parentElement.innerHTML='${s.name.charAt(0)}'">` 
-                                : `<div style="width:100%;height:100%;background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));display:flex;align-items:center;justify-content:center;font-weight:700;">${s.name.charAt(0)}</div>`}
-                        </div>
-                        <div>
-                            <div style="font-weight:600;">${s.name}</div>
-                            <div style="font-size:12px;color:var(--text-muted);">${s.rank || '랭크 정보 없음'}</div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-            
-            document.getElementById('modal-list').innerHTML = listHtml || '<p style="text-align:center;color:var(--text-muted);padding:20px;">등록된 참가자가 없습니다</p>';
-            document.getElementById('modal').classList.add('show');
-        }
-
-        // 모달 닫기
-        function closeModal(event) {
-            if (event && event.target !== event.currentTarget) return;
-            document.getElementById('modal').classList.remove('show');
-        }
-
-        // 스트리머 선택
-        function selectStreamer(index) {
-            teamAssignments[currentTeam][currentPosition] = index;
-            updateTeamSlots();
-            closeModal();
-        }
-
-        // 배치된 스트리머 ID 목록
-        function getAssignedStreamerIds() {
-            const ids = [];
-            for (const team of ['blue', 'red']) {
-                for (const pos of Object.keys(teamAssignments[team])) {
-                    if (teamAssignments[team][pos] !== null) {
-                        ids.push(teamAssignments[team][pos]);
-                    }
-                }
-            }
-            return ids;
-        }
-
-        // 팀 슬롯 업데이트
-        function updateTeamSlots() {
-            for (const team of ['blue', 'red']) {
-                for (const position of Object.keys(teamAssignments[team])) {
+        // 팀 슬롯 렌더링
+        function renderTeams() {
+            ['blue', 'red'].forEach(team => {
+                Object.keys(teams[team]).forEach(position => {
                     const slot = document.querySelector(`.team-slot[data-team="${team}"][data-position="${position}"]`);
-                    const streamerIndex = teamAssignments[team][position];
-                    
-                    if (streamerIndex !== null) {
-                        const s = STREAMERS[streamerIndex];
+                    const streamerId = teams[team][position];
+                    const streamer = STREAMERS.find(s => s.id === streamerId);
+
+                    if (streamer) {
                         slot.classList.add('filled');
                         slot.innerHTML = `
                             <div class="slot-position">${position}</div>
-                            <div class="slot-avatar">
-                                ${s.profileImage 
-                                    ? `<img src="${s.profileImage}" alt="${s.name}" onerror="this.parentElement.innerHTML='${s.name.charAt(0)}'">` 
-                                    : `<div style="width:100%;height:100%;background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));display:flex;align-items:center;justify-content:center;font-weight:700;border-radius:50%;">${s.name.charAt(0)}</div>`}
-                            </div>
+                            <img class="slot-tier" src="${TIER_IMAGES[streamer.tier]}" alt="${streamer.tier}">
                             <div class="slot-info">
-                                <div class="slot-name">${s.name}</div>
-                                <div class="slot-rank">${s.rank || ''}</div>
+                                <div class="slot-name">${streamer.name}</div>
+                                <div class="slot-detail">${TIER_NAMES[streamer.tier]} • 주 ${streamer.position}</div>
                             </div>
                             <button class="slot-remove" onclick="event.stopPropagation(); removeFromSlot('${team}', '${position}')">✕</button>
                         `;
@@ -829,27 +694,93 @@
                             <div class="slot-info"><div class="slot-name">클릭하여 추가</div></div>
                         `;
                     }
-                }
+                });
+
+                updateTeamAvg(team);
+            });
+        }
+
+        // 팀 평균 티어
+        function updateTeamAvg(team) {
+            const members = Object.values(teams[team])
+                .filter(id => id !== null)
+                .map(id => STREAMERS.find(s => s.id === id))
+                .filter(s => s);
+
+            if (members.length === 0) {
+                document.getElementById(`${team}-avg`).textContent = '평균: -';
+                return;
             }
+
+            const total = members.reduce((sum, s) => sum + TIER_VALUES[s.tier], 0);
+            const avg = Math.round(total / members.length);
+            const avgTier = Object.entries(TIER_VALUES).find(([k, v]) => v === avg)?.[0] || 'UNRANKED';
+            
+            document.getElementById(`${team}-avg`).textContent = `평균: ${TIER_NAMES[avgTier]} (${members.length}명)`;
+        }
+
+        // 모달 열기
+        function openModal(team, position) {
+            currentTeam = team;
+            currentPosition = position;
+            document.getElementById('modal-position').textContent = position;
+
+            const assignedIds = getAssignedIds();
+            const currentSlot = teams[team][position];
+
+            const available = STREAMERS.filter(s => !assignedIds.includes(s.id) || s.id === currentSlot);
+
+            if (available.length === 0) {
+                document.getElementById('modal-list').innerHTML = '<div class="empty-state">배치 가능한 스트리머가 없습니다</div>';
+            } else {
+                document.getElementById('modal-list').innerHTML = available.map(s => `
+                    <div class="modal-streamer" onclick="selectStreamer(${s.id})">
+                        <img class="tier-icon" src="${TIER_IMAGES[s.tier]}" alt="${s.tier}" style="width:32px;height:32px;">
+                        <div>
+                            <div style="font-weight:600;">${s.name}</div>
+                            <div style="font-size:12px;color:var(--text-muted);">${TIER_NAMES[s.tier]} • ${s.position}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('modal').classList.add('show');
+        }
+
+        // 모달 닫기
+        function closeModal(event) {
+            if (event && event.target !== event.currentTarget) return;
+            document.getElementById('modal').classList.remove('show');
+        }
+
+        // 스트리머 선택
+        function selectStreamer(id) {
+            teams[currentTeam][currentPosition] = id;
+            renderTeams();
+            renderStreamers();
+            closeModal();
         }
 
         // 슬롯에서 제거
         function removeFromSlot(team, position) {
-            teamAssignments[team][position] = null;
-            updateTeamSlots();
+            teams[team][position] = null;
+            renderTeams();
+            renderStreamers();
         }
 
         // 팀 초기화
         function resetTeams() {
-            teamAssignments = {
+            teams = {
                 blue: { '탑': null, '정글': null, '미드': null, '원딜': null, '서폿': null },
                 red: { '탑': null, '정글': null, '미드': null, '원딜': null, '서폿': null }
             };
-            updateTeamSlots();
+            renderTeams();
+            renderStreamers();
         }
 
-        // 초기화
+        // 초기 렌더링
         renderStreamers();
+        renderTeams();
     </script>
 </body>
 </html>
